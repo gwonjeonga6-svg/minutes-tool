@@ -484,12 +484,10 @@ function loadJSON(e){
 }
 
 function resetAll(){
-  if(!confirm('새 회의록을 작성할까요?')) return;
+  if(!confirm('새 회의록을 작성할까요? 현재 내용은 사라져요.')) return;
+  localStorage.removeItem('qps_minutes_auto');
   clearPhoto(1); clearPhoto(2); setMeetingType('정기');
-  loadTemplate('상반기');
-  document.getElementById('meetingDate').innerHTML='2026년 &nbsp;&nbsp;월 &nbsp;&nbsp;일( &nbsp;) &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;';
-  document.getElementById('meetingPlace').textContent='신관 8층 대회의실';
-  document.getElementById('opening').textContent='○ 회칙 제 8조에 의거 재적 위원    명 중    명 참석, 결석    명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함\n\n○ 전 회의록 낭독';
+  switchType('상반기');
 }
 
 function downloadWord(){
@@ -542,7 +540,65 @@ ${phHtml}
 }
 
 // 초기 로드
-switchType('상반기');
+// localStorage에 저장된 내용 있으면 복원
+const _saved = localStorage.getItem('qps_minutes_auto');
+if(_saved){
+  try{
+    const d=JSON.parse(_saved);
+    // 탭 활성화
+    const type=d.meetingType==='임시'?'임시':d.title&&d.title.includes('하반기')?'하반기':'상반기';
+    ['상반기','하반기','임시'].forEach(t=>{
+      const btn=document.getElementById('tab-'+t);
+      if(btn) btn.classList.toggle('btn-tab-active', t===type);
+    });
+    setMeetingType(d.meetingType||'정기');
+    document.getElementById('docTitle').textContent=d.title||'';
+    document.getElementById('meetingDate').innerHTML=d.meetingDate||'';
+    document.getElementById('meetingPlace').textContent=d.meetingPlace||'';
+    document.getElementById('attendees').textContent=d.attendees||'';
+    document.getElementById('secretary').textContent=d.secretary||'';
+    document.getElementById('opening').textContent=d.opening||'';
+    document.getElementById('agendaList').innerHTML=''; agCnt=0;
+    (d.agendas||[]).forEach(a=>addAgenda(a));
+    document.getElementById('contentList').innerHTML='';
+    (d.contents||[]).forEach(c=>addContent(c.title,c.body));
+    document.getElementById('suggestList').innerHTML='';
+    (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
+    document.getElementById('resolutionList').innerHTML='';
+    (d.resolutions||[]).forEach(r=>addResolution(r.title,r.body));
+    document.getElementById('attachList').innerHTML=''; atCnt=0;
+    (d.attaches||[]).forEach(a=>addAttach(a));
+    if(d.photo1){photoData[1]=d.photo1;const s=document.getElementById('slot1');s.innerHTML=`<img src="${d.photo1}"><button class="photo-del no-print" onclick="clearPhoto(1)">✕ 삭제</button>`;s.onclick=null;}
+    if(d.photo2){photoData[2]=d.photo2;const s=document.getElementById('slot2');s.innerHTML=`<img src="${d.photo2}"><button class="photo-del no-print" onclick="clearPhoto(2)">✕ 삭제</button>`;s.onclick=null;}
+    showAutoSaveStatus('✅ 자동저장된 내용을 불러왔어요');
+  } catch(e){ switchType('상반기'); }
+} else {
+  switchType('상반기');
+}
+
+// 자동저장 (30초마다 + 내용 변경 시)
+function autoSave(){
+  try{
+    localStorage.setItem('qps_minutes_auto', JSON.stringify(getData()));
+    showAutoSaveStatus('자동저장 완료');
+  } catch(e){}
+}
+function showAutoSaveStatus(msg){
+  let el=document.getElementById('autosave-status');
+  if(!el){
+    el=document.createElement('span');
+    el.id='autosave-status';
+    el.style.cssText='font-size:11px;color:rgba(255,255,255,0.5);margin-left:8px;';
+    document.querySelector('.toolbar-title').after(el);
+  }
+  el.textContent=msg;
+  setTimeout(()=>el.textContent='',3000);
+}
+setInterval(autoSave, 30000);
+document.querySelector('.doc').addEventListener('input', ()=>{
+  clearTimeout(window._autoSaveTimer);
+  window._autoSaveTimer=setTimeout(autoSave, 2000);
+});
 </script>
 </body>
 </html>
