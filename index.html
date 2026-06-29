@@ -35,7 +35,7 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .editable:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
 
 /* 안건/붙임 행 */
-.item-row{display:flex;align-items:flex-start;gap:6px;padding:5px 12px;border-bottom:1px solid #E2E8F0;}
+.item-row{display:flex;align-items:flex-start;gap:6px;padding:5px 12px;border-bottom:1px solid #94A3B8;}
 .item-row:last-child{border-bottom:none;}
 .item-num{font-weight:700;color:#1B3A6B;min-width:22px;flex-shrink:0;padding-top:1px;}
 .item-text{flex:1;outline:none;min-height:18px;line-height:1.8;}
@@ -44,7 +44,7 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .item-del:hover{color:#DC2626;}
 
 /* 내용 행 */
-.content-row{padding:8px 12px;border-bottom:1px solid #E2E8F0;}
+.content-row{padding:8px 12px;border-bottom:1px solid #94A3B8;}
 .content-row:last-child{border-bottom:none;}
 .content-title{font-weight:700;outline:none;width:100%;min-height:18px;line-height:1.8;display:block;color:#1B3A6B;}
 .content-title:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;font-weight:400;}
@@ -54,7 +54,7 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .row-del:hover{color:#DC2626;}
 
 /* 건의사항 행 */
-.suggest-row{display:flex;border-bottom:1px solid #E2E8F0;}
+.suggest-row{display:flex;border-bottom:1px solid #94A3B8;}
 .suggest-row:last-child{border-bottom:none;}
 .suggest-who{min-width:80px;max-width:80px;background:#F8FAFC;font-weight:700;outline:none;padding:8px;border-right:1px solid #E2E8F0;text-align:center;line-height:1.8;}
 .suggest-who:empty:before{content:'발언자';color:#94A3B8;font-style:italic;font-weight:400;}
@@ -86,13 +86,18 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   .doc{border:none;padding:0;}
   .doc-title{font-size:15pt;}
   .main-table td{font-size:9pt;padding:5px 8px;}
-  .item-row{padding:4px 8px;}
-  .content-row{padding:5px 8px;}
-  .suggest-who{padding:5px 6px;min-width:65px;max-width:65px;}
-  .suggest-text{padding:5px 8px;}
+  .item-row{padding:4px 8px;page-break-inside:avoid;}
+  .content-row{padding:5px 8px;page-break-inside:avoid;}
+  .suggest-row{page-break-inside:avoid;}
+  .suggest-who{padding:5px 6px;min-width:65px;max-width:65px;border-bottom:1px solid #94A3B8!important;}
+  .suggest-text{padding:5px 8px;border-bottom:1px solid #94A3B8!important;}
+  .suggest-row:last-child .suggest-who{border-bottom:none!important;}
+  .suggest-row:last-child .suggest-text{border-bottom:none!important;}
   .photo-slot{border:1px solid #CBD5E1;background:#fff;}
   .photo-slot img{max-height:130px;}
   .print-pagenum{display:block!important;text-align:right;font-size:8pt;color:#94A3B8;padding-top:6px;border-top:1px solid #E2E8F0;margin-top:8px;}
+  /* 섹션별 페이지 잘림 방지 */
+  .main-table tr{page-break-inside:avoid;}
 }
 .print-pagenum{display:none;}
 </style>
@@ -112,10 +117,33 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
     <button class="btn btn-gray" onclick="document.getElementById('loadFile').click()">📂 불러오기</button>
     <input type="file" id="loadFile" accept=".json" style="display:none" onchange="loadJSON(event)">
     <button class="btn btn-gray" onclick="resetAll()">🔄 새 회의록</button>
+    <button class="btn" style="background:#7C3AED;color:#fff;" onclick="showAIModal()">✨ AI 회의록 정리</button>
   </div>
 </div>
 
 <div class="doc-wrap">
+<!-- AI 모달 -->
+<div id="aiModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:28px;max-width:680px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <div style="font-size:16px;font-weight:800;color:#1B3A6B;margin-bottom:6px;">✨ AI 회의록 자동 정리</div>
+    <div style="font-size:12px;color:#64748B;margin-bottom:14px;">PPT 발표 내용을 텍스트로 붙여넣으면 AI가 회의록 형식으로 정리해드려요.</div>
+    <textarea id="aiInput" placeholder="PPT 내용을 여기에 붙여넣기 하세요.&#10;&#10;예)&#10;QI 활동 진행 현황&#10;- 15개 팀 부서별 QI 진행 중&#10;- 완료 5팀, 진행 중 10팀&#10;&#10;[논의 1] 처방 투여방법 팝업 개선&#10;- 현황: 공란 시 IM 자동설정 오류&#10;- 개선안: 미입력 시 팝업 생성..." 
+      style="width:100%;min-height:220px;padding:12px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;font-family:'Nanum Gothic','맑은 고딕',sans-serif;resize:vertical;line-height:1.7;"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
+      <button onclick="runAI()" style="background:#7C3AED;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✨ AI 정리 시작</button>
+      <button onclick="closeAIModal()" style="background:#F1F5F9;color:#475569;border:1px solid #E2E8F0;border-radius:7px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;">닫기</button>
+      <span id="aiStatus" style="font-size:12px;color:#7C3AED;margin-left:4px;"></span>
+    </div>
+    <div id="aiPreview" style="display:none;margin-top:16px;border-top:1px solid #E2E8F0;padding-top:16px;">
+      <div style="font-size:13px;font-weight:700;color:#1B3A6B;margin-bottom:8px;">AI 정리 결과 미리보기</div>
+      <div id="aiPreviewContent" style="font-size:12px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button onclick="applyAI()" style="background:#16A34A;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✅ 회의록에 적용</button>
+        <button onclick="runAI()" style="background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:7px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:inherit;">↺ 다시 정리</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="doc">
 
 <div class="doc-title" id="docTitle" contenteditable="true">2026년 제1회 QPS위원회 회의록</div>
@@ -539,7 +567,105 @@ ${phHtml}
   a.href=URL.createObjectURL(b); a.download=`${d.title||'회의록'}_${ds}.doc`; a.click();
 }
 
-// 초기 로드
+// ── AI 회의록 정리 ──
+let aiResult = null;
+
+function showAIModal(){
+  document.getElementById('aiModal').style.display='flex';
+  document.getElementById('aiPreview').style.display='none';
+  document.getElementById('aiStatus').textContent='';
+}
+function closeAIModal(){
+  document.getElementById('aiModal').style.display='none';
+}
+
+async function runAI(){
+  const input = document.getElementById('aiInput').value.trim();
+  if(!input){ alert('PPT 내용을 먼저 붙여넣기 해주세요.'); return; }
+
+  const statusEl = document.getElementById('aiStatus');
+  statusEl.textContent = '⏳ AI가 정리 중이에요...';
+  document.getElementById('aiPreview').style.display='none';
+
+  const meetingType = document.getElementById('chk-임시').textContent==='■' ? '임시' :
+                      document.getElementById('docTitle').textContent.includes('하반기') ? '하반기' : '상반기';
+
+  const prompt = `당신은 병원 QPS위원회 회의록 작성 전문가입니다.
+아래 PPT 발표 내용을 분석하여 회의록 형식으로 정리해주세요.
+
+회의 유형: ${meetingType}회의
+병원명: 좋은삼선병원
+
+다음 JSON 형식으로만 출력하세요. 다른 설명이나 마크다운 없이 JSON만 출력:
+{
+  "opening": "개회 선언 및 전 회의록 낭독 문구",
+  "contents": [
+    {"title": "1. 보고사항 또는 안건제목", "body": "상세 내용"},
+    {"title": "[논의 1] 안건명", "body": "현황\\n\\n의결 내용\\n\\n이행 사항"}
+  ],
+  "resolutions": [
+    {"title": "의결 항목명", "body": "재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함"}
+  ]
+}
+
+PPT 내용:
+${input}`;
+
+  try {
+    const res = await fetch('/api/claude', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        messages:[{role:'user', content: prompt}]
+      })
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content || '';
+
+    // JSON 파싱
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if(!jsonMatch) throw new Error('JSON 파싱 실패');
+    aiResult = JSON.parse(jsonMatch[0]);
+
+    // 미리보기 표시
+    let preview = '';
+    if(aiResult.opening) preview += `[개회]\n${aiResult.opening}\n\n`;
+    (aiResult.contents||[]).forEach(c => {
+      preview += `[${c.title}]\n${c.body}\n\n`;
+    });
+    (aiResult.resolutions||[]).forEach(r => {
+      preview += `[심의의결] ${r.title}\n${r.body}\n\n`;
+    });
+
+    document.getElementById('aiPreviewContent').textContent = preview.trim();
+    document.getElementById('aiPreview').style.display='block';
+    statusEl.textContent = '✅ 정리 완료!';
+  } catch(e) {
+    statusEl.textContent = '❌ 오류: ' + e.message;
+  }
+}
+
+function applyAI(){
+  if(!aiResult) return;
+
+  if(aiResult.opening){
+    document.getElementById('opening').textContent = aiResult.opening;
+  }
+  if(aiResult.contents && aiResult.contents.length){
+    document.getElementById('contentList').innerHTML='';
+    aiResult.contents.forEach(c => addContent(c.title, c.body));
+  }
+  if(aiResult.resolutions && aiResult.resolutions.length){
+    document.getElementById('resolutionList').innerHTML='';
+    aiResult.resolutions.forEach(r => addResolution(r.title, r.body));
+  }
+
+  closeAIModal();
+  autoSave();
+  alert('회의록에 적용됐어요! 내용을 확인하고 수정해주세요.');
+}
+
+// ── AI 회의록 정리 ──
 // localStorage에 저장된 내용 있으면 복원
 const _saved = localStorage.getItem('qps_minutes_auto');
 if(_saved){
