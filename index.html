@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QPS위원회 회의록</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#F0F4F8;color:#1E293B;font-size:14px;}
+.header{background:#1B3A6B;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{font-size:18px;font-weight:800;}
+.header .sub{font-size:12px;color:#A8C4E8;margin-top:2px;}
+.toolbar{background:#fff;border-bottom:1px solid #E2E8F0;padding:10px 24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:inherit;}
+.btn-primary{background:#1B3A6B;color:#fff;}
+.btn-secondary{background:#F1F5F9;color:#475569;border:1px solid #E2E8F0;}
+.btn-green{background:#16A34A;color:#fff;}
+.btn-word{background:#2B5797;color:#fff;}
+.btn:hover{opacity:0.88;}
+.content{max-width:900px;margin:24px auto;padding:0 16px 40px;}
+.section{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.07);padding:20px 24px;margin-bottom:16px;}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sec-title{font-size:15px;font-weight:800;color:#1B3A6B;}
+.toggle-sec{background:#F1F5F9;border:1px solid #E2E8F0;color:#64748B;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit;}
+.form-row{display:grid;grid-template-columns:120px 1fr;align-items:start;gap:8px;margin-bottom:10px;}
+.form-row label{font-size:13px;font-weight:700;color:#374151;padding-top:8px;}
+.form-row input,.form-row textarea,.form-row select{width:100%;padding:7px 10px;border:1.5px solid #E2E8F0;border-radius:7px;font-size:13px;font-family:inherit;color:#1E293B;resize:vertical;}
+.form-row textarea{min-height:60px;line-height:1.6;}
+.form-row input:focus,.form-row textarea:focus{outline:none;border-color:#1B3A6B;}
+/* 회의유형 탭 */
+.type-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.type-tab{padding:8px 18px;border-radius:8px;border:2px solid #E2E8F0;background:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:#64748B;transition:all 0.15s;}
+.type-tab.active{background:#1B3A6B;color:#fff;border-color:#1B3A6B;}
+.type-tab:hover:not(.active){border-color:#1B3A6B;color:#1B3A6B;}
+/* 사진 */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px;}
+.photo-slot{border:2px dashed #CBD5E1;border-radius:8px;padding:14px;text-align:center;background:#F8FAFC;cursor:pointer;transition:border-color 0.2s;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.photo-slot:hover{border-color:#1B3A6B;}
+.photo-slot img{width:100%;max-height:160px;object-fit:cover;border-radius:6px;}
+.photo-slot .photo-label{font-size:12px;color:#94A3B8;}
+.photo-del-btn{background:#FEE2E2;border:none;color:#DC2626;border-radius:5px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit;margin-top:4px;}
+/* 항목 */
+.agenda-item{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px;margin-bottom:10px;position:relative;}
+.agenda-num{font-size:12px;font-weight:800;color:#1B3A6B;margin-bottom:6px;}
+.agenda-del{position:absolute;top:10px;right:10px;background:none;border:none;color:#94A3B8;font-size:16px;cursor:pointer;}
+.agenda-del:hover{color:#DC2626;}
+.add-btn{background:#EFF6FF;border:1px dashed #93C5FD;color:#1D4ED8;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;margin-top:4px;}
+.add-btn:hover{background:#DBEAFE;}
+.radio-row{display:flex;gap:16px;padding-top:6px;}
+.radio-row label{display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;}
+.no-print{display:block;}
+/* 인쇄 */
+@media print{
+  @page{size:A4 portrait;margin:15mm 15mm 20mm 15mm;}
+  .header,.toolbar,.no-print,.add-btn,.agenda-del,.toggle-sec,.type-tabs,.photo-del-btn{display:none!important;}
+  body{background:#fff;font-size:10pt;}
+  .content{max-width:100%;margin:0;padding:0;}
+  .section{box-shadow:none;border:none;padding:0;margin-bottom:12px;}
+  .sec-title{font-size:11pt;color:#1B3A6B;font-weight:800;border-bottom:1.5px solid #1B3A6B;padding-bottom:4px;margin-bottom:8px;}
+  .form-row{grid-template-columns:90px 1fr;gap:4px;margin-bottom:5px;}
+  .form-row label{font-size:9.5pt;padding-top:0;}
+  .form-row input,.form-row textarea{border:none;padding:0;font-size:9.5pt;min-height:auto;}
+  .agenda-item{background:#fff;border:none;padding:0 0 6px 0;}
+  .agenda-num{font-size:9.5pt;}
+  .photo-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .photo-slot{border:none;background:#fff;padding:0;}
+  .photo-slot img{max-height:180px;}
+  .photo-slot .photo-label{font-size:8.5pt;color:#64748B;}
+  .section.hidden-sec{display:none!important;}
+  .print-pagenum{display:block!important;position:fixed;bottom:8mm;right:12mm;font-size:8.5pt;color:#94A3B8;}
+}
+.print-pagenum{display:none;}
+</style>
+</head>
+<body>
+
+<div class="header no-print">
+  <div>
+    <div class="sub">좋은삼선병원 QPS팀</div>
+    <h1>📋 QPS위원회 회의록</h1>
+  </div>
+</div>
+
+<div class="toolbar no-print">
+  <button class="btn btn-primary" onclick="window.print()">🖨️ PDF 출력</button>
+  <button class="btn btn-word" onclick="downloadWord()">📄 Word 다운로드</button>
+  <button class="btn btn-green" onclick="saveJSON()">💾 저장</button>
+  <button class="btn btn-secondary" onclick="document.getElementById('loadFile').click()">📂 불러오기</button>
+  <input type="file" id="loadFile" accept=".json" style="display:none" onchange="loadJSON(event)">
+  <button class="btn btn-secondary" onclick="resetAll()">🔄 새 회의록</button>
+</div>
+
+<div class="content">
+
+  <!-- 기본정보 -->
+  <div class="section" id="sec-basic">
+    <div class="sec-header"><span class="sec-title">📌 회의 기본정보</span></div>
+
+    <!-- 회의유형 선택 -->
+    <div class="form-row">
+      <label>회의 유형</label>
+      <div>
+        <div class="type-tabs no-print">
+          <button class="type-tab active" onclick="setType('상반기')">상반기 정기</button>
+          <button class="type-tab" onclick="setType('하반기')">하반기 정기</button>
+          <button class="type-tab" onclick="setType('임시')">임시회의</button>
+        </div>
+        <input type="hidden" id="meetingType" value="상반기">
+      </div>
+    </div>
+
+    <div class="form-row"><label>병원명</label><input id="hospital" value="좋은삼선병원"></div>
+    <div class="form-row"><label>회의명</label><input id="meetingTitle" placeholder="예) 2026년 제2회 QPS위원회"></div>
+    <div class="form-row"><label>회의일시</label><input id="meetingDate" placeholder="예) 2026년 6월 26일(금) 12:30 ~ 13:30"></div>
+    <div class="form-row"><label>장소</label><input id="meetingPlace" placeholder="예) 신관 8층 대회의실"></div>
+    <div class="form-row"><label>참석대상</label><input id="attendees" placeholder="예) QPS위원회 위원_출석부 참조"></div>
+    <div class="form-row"><label>간사</label><input id="secretary" value="QPS팀장 권정아"></div>
+    <div class="form-row"><label>재적/참석</label><input id="quorum" placeholder="예) 재적 18명 중 17명 참석, 결석 1명"></div>
+  </div>
+
+  <!-- 회의사진 -->
+  <div class="section" id="sec-photo">
+    <div class="sec-header">
+      <span class="sec-title">📷 회의사진</span>
+      <button class="toggle-sec no-print" onclick="toggleSection('sec-photo','photo-content')">숨기기</button>
+    </div>
+    <div id="photo-content">
+      <div class="photo-grid">
+        <div>
+          <div class="photo-slot" id="slot1" onclick="document.getElementById('photo1').click()">
+            <span style="font-size:24px;">📷</span>
+            <span class="photo-label">사진 1 클릭하여 첨부</span>
+          </div>
+          <input type="file" id="photo1" accept="image/*" style="display:none" onchange="setPhoto(1,event)">
+        </div>
+        <div>
+          <div class="photo-slot" id="slot2" onclick="document.getElementById('photo2').click()">
+            <span style="font-size:24px;">📷</span>
+            <span class="photo-label">사진 2 클릭하여 첨부</span>
+          </div>
+          <input type="file" id="photo2" accept="image/*" style="display:none" onchange="setPhoto(2,event)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 안건 -->
+  <div class="section" id="sec-agenda">
+    <div class="sec-header"><span class="sec-title">📋 안건</span></div>
+    <div id="agendaList"></div>
+    <button class="add-btn no-print" onclick="addAgenda()">+ 안건 추가</button>
+  </div>
+
+  <!-- 회의내용 -->
+  <div class="section" id="sec-content">
+    <div class="sec-header"><span class="sec-title">📝 회의내용 및 의결사항</span></div>
+    <div class="form-row">
+      <label>개회</label>
+      <textarea id="opening" rows="2" placeholder="예) 회칙 제 8조에 의거 재적 위원 18명 중 17명 참석..."></textarea>
+    </div>
+    <div id="contentList"></div>
+    <button class="add-btn no-print" onclick="addContent()">+ 내용 추가</button>
+  </div>
+
+  <!-- 건의사항 -->
+  <div class="section" id="sec-suggest">
+    <div class="sec-header">
+      <span class="sec-title">💬 건의사항 및 기타의견</span>
+      <button class="toggle-sec no-print" onclick="toggleSection('sec-suggest','suggest-content')">숨기기</button>
+    </div>
+    <div id="suggest-content">
+      <div id="suggestList"></div>
+      <button class="add-btn no-print" onclick="addSuggest()">+ 의견 추가</button>
+    </div>
+  </div>
+
+  <!-- 심의의결 -->
+  <div class="section" id="sec-resolution">
+    <div class="sec-header">
+      <span class="sec-title">✅ 심의의결사항</span>
+      <button class="toggle-sec no-print" onclick="toggleSection('sec-resolution','resolution-content')">숨기기</button>
+    </div>
+    <div id="resolution-content">
+      <div id="resolutionList"></div>
+      <button class="add-btn no-print" onclick="addResolution()">+ 의결사항 추가</button>
+    </div>
+  </div>
+
+  <!-- 붙임자료 -->
+  <div class="section" id="sec-attach">
+    <div class="sec-header">
+      <span class="sec-title">📎 붙임자료</span>
+      <button class="toggle-sec no-print" onclick="toggleSection('sec-attach','attach-content')">숨기기</button>
+    </div>
+    <div id="attach-content">
+      <div id="attachList"></div>
+      <button class="add-btn no-print" onclick="addAttach()">+ 붙임자료 추가</button>
+    </div>
+  </div>
+
+</div>
+<div class="print-pagenum" id="pagenum"></div>
+
+<script>
+// ── 회의유형별 템플릿 ──
+const TEMPLATES = {
+  상반기: {
+    title: '2026년 제1회 QPS위원회',
+    agendas: [
+      '전년도 사업시행결과 보고',
+      '당해연도 사업계획(안) 및 예산(안) 보고',
+      '질 향상 활동 및 지표관리 선정 주제에 대한 심의 및 승인',
+      '위험도 평가-FMEA 주제 선정',
+      '환자안전 관리 활동 보고',
+      '외부 평가 관련 보고',
+      '기타'
+    ],
+    contents: [
+      {title:'1. 전년도 사업시행결과 보고', body:'[붙임자료1]의 주요사업결과 요약보고를 중심으로 PPT 자료화면을 통해 보고함'},
+      {title:'2. 당해연도 사업계획(안)', body:'[붙임자료2]를 참조하여 당해연도 사업계획(안)에 대한 설명함\n○명 중 ○명 찬성(거수로 가부 확인)하여 사업계획(안)이 통과됨'},
+      {title:'3. 질 향상 활동 주제 심의 및 승인', body:'○ ○개 팀 지원 ☞ [붙임자료3] 우선순위표 참조\n○ 부서별 QI 운영: 부서 1순위 주제와 병원 전략에 부합하는 Bottom-up 주제를 수행'},
+      {title:'4. 위험도 평가-FMEA 주제 선정', body:'☞ 주제: \n[붙임자료4] 참조'},
+      {title:'5. 환자안전 관리 활동 보고', body:'PPT 및 [붙임자료5]를 참조하여 보고함'},
+    ],
+    resolutions: [
+      {title:'사업계획 및 예산 승인', body:''},
+      {title:'QI활동 주제 선정', body:''},
+      {title:'FMEA 주제 선정', body:''},
+    ],
+    attaches: ['전년도 결과보고서 1부','당해연도 사업계획서 1부','QI활동 주제 심의서 1부','위험평가 1부','발표자료 PPT 1부']
+  },
+  하반기: {
+    title: '2025년 하반기 QPS위원회',
+    agendas: [
+      '당해연도 사업계획(안) 보고',
+      '상반기 QPS실 사업 실적 보고',
+      'QPS 위원회 위원 구성 변경 건',
+      '표준진료지침(CP) 관리 모니터링 결과 보고 및 갱신(폐기) 여부 심의',
+      '환자안전 관리 활동 보고',
+      '논의사항 및 기타의견'
+    ],
+    contents: [
+      {title:'1. 당해연도 사업계획(안)', body:'[붙임자료1]를 참조하여 설명함\n○명 중 ○명 찬성(거수로 가부 확인)하여 통과됨'},
+      {title:'2. 상반기 사업 실적 보고', body:'PPT 자료화면을 통해 개요 설명\n① 지표 현황:\n② QI활동:\n③ 환자안전사고:'},
+      {title:'3. 위원 변경 건', body:'① 위촉:\n② 해임:\n③ 연임:'},
+      {title:'4. CP 관리 모니터링', body:'§ PPT 자료화면을 통해 개요 및 모니터링 결과 설명\n§ 적용률 및 완료율:'},
+      {title:'5. 환자안전 관리 활동 보고', body:'① 환자안전주의경보:\n② 환자안전사고 보고:\n③ 환자안전문화 설문조사:'},
+    ],
+    resolutions: [
+      {title:'사업계획 심의 의결', body:''},
+      {title:'위원 변경 건 심의 의결', body:''},
+      {title:'CP 갱신(폐기) 여부 심의 의결', body:''},
+    ],
+    attaches: ['사업계획서 1부','상반기 실적보고서 1부','위원 변경 관련 서류 1부','발표자료 PPT 1부']
+  },
+  임시: {
+    title: '2026년 임시 QPS위원회',
+    agendas: ['안건 1', '기타'],
+    contents: [
+      {title:'1. 안건 내용', body:''},
+    ],
+    resolutions: [
+      {title:'', body:''},
+    ],
+    attaches: ['관련 자료 1부']
+  }
+};
+
+let currentType = '상반기';
+const photoData = {1:null, 2:null};
+
+function setType(type, skipConfirm=false) {
+  if (!skipConfirm && (
+    document.getElementById('agendaList').children.length > 0 ||
+    document.getElementById('contentList').children.length > 0
+  )) {
+    if (!confirm('회의 유형을 바꾸면 안건·내용이 초기화돼요. 계속할까요?')) return;
+  }
+  currentType = type;
+  document.querySelectorAll('.type-tab').forEach((t,i) => {
+    t.classList.toggle('active', ['상반기','하반기','임시'][i] === type);
+  });
+  document.getElementById('meetingType').value = type;
+  loadTemplate(type);
+}
+
+function loadTemplate(type) {
+  const tpl = TEMPLATES[type];
+  document.getElementById('meetingTitle').value = tpl.title;
+  // 안건
+  document.getElementById('agendaList').innerHTML = ''; agendaCount = 0;
+  tpl.agendas.forEach(a => addAgenda(a));
+  // 내용
+  document.getElementById('contentList').innerHTML = ''; contentCount = 0;
+  tpl.contents.forEach(c => addContent(c.title, c.body));
+  // 심의의결
+  document.getElementById('resolutionList').innerHTML = '';
+  tpl.resolutions.forEach(r => addResolution(r.title, r.body));
+  // 붙임
+  document.getElementById('attachList').innerHTML = ''; attachCount = 0;
+  tpl.attaches.forEach(a => addAttach(a));
+  // 개회
+  document.getElementById('opening').value = '회칙 제 8조에 의거 재적 위원 ○명 중 ○명 참석, 결석 ○명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함\n\n○ 전 회의록 낭독';
+}
+
+// ── 사진 ──
+function setPhoto(num, e) {
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    photoData[num] = ev.target.result;
+    const slot = document.getElementById('slot'+num);
+    slot.innerHTML = `<img src="${ev.target.result}"><button class="photo-del-btn no-print" onclick="clearPhoto(${num})">✕ 삭제</button>`;
+    slot.onclick = null;
+  };
+  reader.readAsDataURL(file);
+}
+function clearPhoto(num) {
+  photoData[num] = null;
+  const slot = document.getElementById('slot'+num);
+  slot.innerHTML = `<span style="font-size:24px;">📷</span><span class="photo-label">사진 ${num} 클릭하여 첨부</span>`;
+  slot.onclick = () => document.getElementById('photo'+num).click();
+  document.getElementById('photo'+num).value='';
+}
+
+// ── 안건 ──
+let agendaCount = 0;
+function addAgenda(text='') {
+  agendaCount++;
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = `<div class="agenda-num">${agendaCount}.</div>
+    <input placeholder="안건 제목 입력" value="${text.replace(/"/g,'&quot;')}" style="width:100%;padding:6px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-family:inherit;">
+    <button class="agenda-del no-print" onclick="this.parentElement.remove();renumberAgenda()">✕</button>`;
+  document.getElementById('agendaList').appendChild(div);
+}
+function renumberAgenda() {
+  document.querySelectorAll('#agendaList .agenda-num').forEach((el,i) => el.textContent=(i+1)+'.');
+  agendaCount = document.querySelectorAll('#agendaList .agenda-item').length;
+}
+
+// ── 회의내용 ──
+let contentCount = 0;
+function addContent(title='', body='') {
+  contentCount++;
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = `
+    <input placeholder="예) 1. 사업계획 보고" value="${title.replace(/"/g,'&quot;')}" style="width:100%;padding:6px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-weight:700;font-family:inherit;margin-bottom:8px;">
+    <textarea placeholder="회의내용 상세 입력..." style="width:100%;min-height:90px;padding:8px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.7;">${body}</textarea>
+    <button class="agenda-del no-print" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('contentList').appendChild(div);
+}
+
+// ── 건의사항 ──
+function addSuggest(who='', text='') {
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:6px;align-items:center;">
+      <input placeholder="발언자 (예: 병원장님)" value="${who.replace(/"/g,'&quot;')}" style="width:150px;padding:6px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;">
+      <button class="agenda-del no-print" style="position:static" onclick="this.closest('.agenda-item').remove()">✕</button>
+    </div>
+    <textarea placeholder="발언 내용..." style="width:100%;min-height:70px;padding:8px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.7;">${text}</textarea>`;
+  document.getElementById('suggestList').appendChild(div);
+}
+
+// ── 심의의결 ──
+function addResolution(title='', body='') {
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = `
+    <input placeholder="의결 항목" value="${title.replace(/"/g,'&quot;')}" style="width:100%;padding:6px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-weight:700;font-family:inherit;margin-bottom:8px;">
+    <textarea placeholder="의결 내용..." style="width:100%;min-height:60px;padding:8px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.7;">${body}</textarea>
+    <button class="agenda-del no-print" onclick="this.closest('.agenda-item').remove()">✕</button>`;
+  document.getElementById('resolutionList').appendChild(div);
+}
+
+// ── 붙임자료 ──
+let attachCount = 0;
+function addAttach(text='') {
+  attachCount++;
+  const div = document.createElement('div');
+  div.className = 'agenda-item';
+  div.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-size:12px;font-weight:700;color:#1B3A6B;white-space:nowrap;">붙임${attachCount}.</span>
+      <input placeholder="붙임자료명" value="${text.replace(/"/g,'&quot;')}" style="flex:1;padding:6px 10px;border:1.5px solid #E2E8F0;border-radius:6px;font-size:13px;font-family:inherit;">
+      <button class="agenda-del no-print" style="position:static" onclick="this.closest('.agenda-item').remove();renumberAttach()">✕</button>
+    </div>`;
+  document.getElementById('attachList').appendChild(div);
+}
+function renumberAttach() {
+  document.querySelectorAll('#attachList .agenda-item span').forEach((el,i) => el.textContent='붙임'+(i+1)+'.');
+  attachCount = document.querySelectorAll('#attachList .agenda-item').length;
+}
+
+// ── 섹션 토글 ──
+function toggleSection(secId, contentId) {
+  const content = document.getElementById(contentId);
+  const btn = document.querySelector('#'+secId+' .toggle-sec');
+  const hidden = content.style.display === 'none';
+  content.style.display = hidden ? '' : 'none';
+  btn.textContent = hidden ? '숨기기' : '보이기';
+  document.getElementById(secId).classList.toggle('hidden-sec', !hidden);
+}
+
+// ── 데이터 수집 ──
+function v(id){ return document.getElementById(id)?.value||''; }
+function getData() {
+  return {
+    meetingType: v('meetingType'),
+    hospital: v('hospital'), meetingTitle: v('meetingTitle'),
+    meetingDate: v('meetingDate'), meetingPlace: v('meetingPlace'),
+    attendees: v('attendees'), secretary: v('secretary'), quorum: v('quorum'),
+    opening: v('opening'),
+    agendas: [...document.querySelectorAll('#agendaList input')].map(el=>el.value),
+    contents: [...document.querySelectorAll('#contentList .agenda-item')].map(el=>({
+      title:el.querySelector('input')?.value||'', body:el.querySelector('textarea')?.value||''
+    })),
+    suggests: [...document.querySelectorAll('#suggestList .agenda-item')].map(el=>({
+      who:el.querySelector('input')?.value||'', text:el.querySelector('textarea')?.value||''
+    })),
+    resolutions: [...document.querySelectorAll('#resolutionList .agenda-item')].map(el=>({
+      title:el.querySelector('input')?.value||'', body:el.querySelector('textarea')?.value||''
+    })),
+    attaches: [...document.querySelectorAll('#attachList input')].map(el=>el.value),
+    photo1: photoData[1], photo2: photoData[2]
+  };
+}
+
+// ── 저장/불러오기 ──
+function saveJSON() {
+  const d = getData();
+  const blob = new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${d.meetingTitle||'QPS위원회_회의록'}.json`;
+  a.click();
+}
+function loadJSON(e) {
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      setType(d.meetingType||'상반기', true);
+      ['hospital','meetingTitle','meetingDate','meetingPlace','attendees','secretary','quorum','opening'].forEach(id=>{
+        if(document.getElementById(id)) document.getElementById(id).value = d[id]||'';
+      });
+      document.getElementById('agendaList').innerHTML=''; agendaCount=0;
+      (d.agendas||[]).forEach(a=>addAgenda(a));
+      document.getElementById('contentList').innerHTML=''; contentCount=0;
+      (d.contents||[]).forEach(c=>addContent(c.title,c.body));
+      document.getElementById('suggestList').innerHTML='';
+      (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
+      document.getElementById('resolutionList').innerHTML='';
+      (d.resolutions||[]).forEach(r=>addResolution(r.title,r.body));
+      document.getElementById('attachList').innerHTML=''; attachCount=0;
+      (d.attaches||[]).forEach(a=>addAttach(a));
+      // 사진
+      if(d.photo1){ photoData[1]=d.photo1; const s=document.getElementById('slot1'); s.innerHTML=`<img src="${d.photo1}"><button class="photo-del-btn no-print" onclick="clearPhoto(1)">✕ 삭제</button>`; s.onclick=null; }
+      if(d.photo2){ photoData[2]=d.photo2; const s=document.getElementById('slot2'); s.innerHTML=`<img src="${d.photo2}"><button class="photo-del-btn no-print" onclick="clearPhoto(2)">✕ 삭제</button>`; s.onclick=null; }
+    } catch(err){ alert('파일을 읽을 수 없어요.'); }
+  };
+  reader.readAsText(file);
+}
+function resetAll() {
+  if(!confirm('새 회의록을 작성할까요? 저장되지 않은 내용은 사라져요.')) return;
+  clearPhoto(1); clearPhoto(2);
+  setType('상반기', true);
+  ['meetingDate','meetingPlace','attendees','quorum'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('hospital').value='좋은삼선병원';
+  document.getElementById('secretary').value='QPS팀장 권정아';
+}
+
+// ── Word 다운로드 ──
+function downloadWord() {
+  const d = getData();
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+  const typeLabel = d.meetingType==='임시'?'□ 정기회의  ■ 임시회의':'■ 정기회의  □ 임시회의';
+  const agendaRows = (d.agendas||[]).map((a,i)=>`<tr><td style="width:25pt;text-align:center;">${i+1}.</td><td>${a}</td></tr>`).join('');
+  const photoHtml = (d.photo1||d.photo2) ? `
+    <h2>■ 회의사진</h2>
+    <table><tr>
+      ${d.photo1?`<td style="text-align:center;"><img src="${d.photo1}" style="max-width:200pt;max-height:150pt;"></td>`:'<td></td>'}
+      ${d.photo2?`<td style="text-align:center;"><img src="${d.photo2}" style="max-width:200pt;max-height:150pt;"></td>`:'<td></td>'}
+    </tr></table>` : '';
+  const contentRows = (d.contents||[]).map(c=>`
+    <tr><td style="background:#EFF6FF;font-weight:bold;color:#1B3A6B;padding:6px 10px;">${c.title}</td></tr>
+    <tr><td style="padding:8px 10px;line-height:1.8;white-space:pre-wrap;">${c.body}</td></tr>`).join('');
+  const suggestRows = (d.suggests||[]).map(s=>`
+    <tr><td style="width:80pt;font-weight:bold;background:#F8FAFC;white-space:nowrap;">[${s.who}]</td><td style="white-space:pre-wrap;">${s.text}</td></tr>`).join('');
+  const resRows = (d.resolutions||[]).map(r=>`
+    <tr><td style="background:#EFF6FF;font-weight:bold;color:#1B3A6B;">${r.title}</td></tr>
+    ${r.body?`<tr><td style="white-space:pre-wrap;padding:6px 10px;">${r.body}</td></tr>`:''}`).join('');
+  const attachRows = (d.attaches||[]).map((a,i)=>`<tr><td>붙임${i+1}. ${a} &nbsp;&nbsp;&nbsp;&nbsp; 끝.</td></tr>`).join('');
+
+  const html = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'>
+<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom></w:WordDocument></xml>
+<style>
+  @page Section1{size:595.35pt 841.95pt;margin:50pt 50pt 60pt 50pt;mso-footer-margin:20pt;}
+  div.Section1{page:Section1;}
+  body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;font-size:10pt;margin:0;line-height:1.5;}
+  h1{font-size:16pt;color:#1B3A6B;text-align:center;padding-bottom:10px;margin-bottom:16px;font-weight:800;}
+  h2{font-size:11pt;color:#1B3A6B;background:#EFF6FF;padding:5px 10px;border-left:4px solid #1B3A6B;margin:14px 0 6px;}
+  table{border-collapse:collapse;width:100%;margin-bottom:10px;font-size:9.5pt;}
+  td{border:1px solid #CBD5E1;padding:5px 10px;vertical-align:top;line-height:1.6;}
+  .lbl{background:#EFF6FF;font-weight:bold;color:#1B3A6B;width:70pt;white-space:nowrap;}
+  .footer-div{margin-top:20px;font-size:8.5pt;color:#888;border-top:1px solid #dde1e9;padding-top:6px;text-align:right;}
+</style>
+</head>
+<body><div class="Section1">
+<h1>${d.meetingTitle||'QPS위원회 회의록'}</h1>
+<table>
+  <tr><td class="lbl">회의일시</td><td>${d.meetingDate}</td><td class="lbl">장소</td><td>${d.meetingPlace}</td></tr>
+  <tr><td class="lbl">참석대상</td><td>${d.attendees}</td><td class="lbl">간사</td><td>${d.secretary}</td></tr>
+  <tr><td class="lbl">회의구분</td><td colspan="3">${typeLabel}</td></tr>
+  <tr><td class="lbl">성원확인</td><td colspan="3">${d.quorum}</td></tr>
+</table>
+${photoHtml}
+<h2>■ 안&nbsp;&nbsp;&nbsp;건</h2>
+<table><tbody>${agendaRows||'<tr><td>-</td></tr>'}</tbody></table>
+<h2>■ 회의내용 및 의결사항</h2>
+<table><tr><td style="white-space:pre-wrap;padding:8px 10px;">${d.opening||''}</td></tr></table>
+<table><tbody>${contentRows||'<tr><td>-</td></tr>'}</tbody></table>
+<h2>■ 건의사항 및 기타의견</h2>
+<table><tbody>${suggestRows||'<tr><td>-</td></tr>'}</tbody></table>
+<h2>■ 심의의결사항</h2>
+<table><tbody>${resRows||'<tr><td>-</td></tr>'}</tbody></table>
+<h2>■ 붙임자료</h2>
+<table><tbody>${attachRows||'<tr><td>-</td></tr>'}</tbody></table>
+<div class="footer-div">작성일: ${dateStr} &nbsp;|&nbsp; ${d.hospital} QPS팀 &nbsp;|&nbsp;
+<!--[if supportFields]><span style='mso-element:field-begin'></span> PAGE <span style='mso-element:field-end'></span><![endif]--><span style='mso-no-proof:yes'>1</span> /
+<!--[if supportFields]><span style='mso-element:field-begin'></span> NUMPAGES <span style='mso-element:field-end'></span><![endif]--><span style='mso-no-proof:yes'>1</span> 페이지</div>
+</div></body></html>`;
+
+  const blob = new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${d.meetingTitle||'QPS위원회_회의록'}_${dateStr}.doc`;
+  a.click();
+}
+
+// 초기 로드
+setType('상반기', true);
+</script>
+</body>
+</html>
