@@ -56,7 +56,7 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 /* 건의사항 행 */
 .suggest-row{display:flex;border-bottom:1px solid #94A3B8;}
 .suggest-row:last-child{border-bottom:none;}
-.suggest-who{min-width:80px;max-width:80px;background:#F8FAFC;font-weight:700;outline:none;padding:8px;border-right:1px solid #E2E8F0;text-align:center;line-height:1.8;}
+.suggest-who{min-width:90px;max-width:90px;background:#F8FAFC;font-weight:700;outline:none;padding:8px;border-right:1px solid #94A3B8;text-align:center;line-height:1.8;font-size:13px;}
 .suggest-who:empty:before{content:'발언자';color:#94A3B8;font-style:italic;font-weight:400;}
 .suggest-text{flex:1;outline:none;padding:8px 12px;min-height:40px;line-height:1.8;white-space:pre-wrap;}
 .suggest-text:empty:before{content:'발언 내용...';color:#94A3B8;font-style:italic;}
@@ -90,10 +90,10 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   .item-row{padding:3px 7px;page-break-inside:avoid;}
   .content-row{padding:4px 7px;page-break-inside:avoid;}
   .suggest-row{page-break-inside:avoid;}
-  .suggest-who{padding:5px 6px;min-width:65px;max-width:65px;border-bottom:1px solid #94A3B8!important;}
-  .suggest-text{padding:5px 8px;border-bottom:1px solid #94A3B8!important;}
-  .suggest-row:last-child .suggest-who{border-bottom:none!important;}
-  .suggest-row:last-child .suggest-text{border-bottom:none!important;}
+  .suggest-who{padding:4px 6px;min-width:75px;max-width:75px;border-right:1px solid #94A3B8!important;font-size:8pt;}
+  .suggest-text{padding:4px 8px;}
+  .suggest-row{border-bottom:1px solid #94A3B8!important;}
+  .suggest-row:last-child{border-bottom:none!important;}
   .photo-slot{border:1px solid #CBD5E1;background:#fff;}
   .photo-slot img{max-height:130px;}
   .print-pagenum{display:block!important;text-align:right;font-size:8pt;color:#94A3B8;padding-top:6px;border-top:1px solid #E2E8F0;margin-top:8px;}
@@ -379,7 +379,7 @@ const TPL={
       {title:'4. 위험도 평가-FMEA 주제 선정',body:'☞ 주제: \n[붙임자료4] 참조'},
       {title:'5. 환자안전 관리 활동 보고',body:'PPT 및 [붙임자료5]를 참조하여 보고함'},
     ],
-    suggests:[{who:'병원장님',text:''},{who:'QPS실장님',text:''},{who:'사무국장님',text:''}],
+    suggests:[{who:'병원장',text:''},{who:'QPS실장',text:''},{who:'사무국장',text:''}],
     resolutions:[
       {title:'사업계획 및 예산 승인',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
       {title:'QI활동 주제 선정',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
@@ -398,7 +398,7 @@ const TPL={
       {title:'5. 환자안전문화 설문조사 결과',body:'① 응답자:   명(   %)\n② 종합 현황: 안전태도(   %) / 안전업무수행(   %)\n③ 주요 약점:\n④ 집중 관리 대상:\n⑤ 개선 과제:'},
       {title:'6. QI경진대회 결과',body:'일시:\n발표 팀 수:   개 팀\n수상 내역:\n재단병원 우수사례 발표 여부:'},
     ],
-    suggests:[{who:'병원장님',text:''},{who:'QPS실장님',text:''},{who:'사무국장님',text:''},{who:'간호부장님',text:''}],
+    suggests:[{who:'병원장',text:''},{who:'QPS실장',text:''},{who:'사무국장',text:''},{who:'간호부장',text:''}],
     resolutions:[
       {title:'위원 변경 건 심의 의결',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
       {title:'CP 갱신(폐기) 여부 심의 의결',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
@@ -417,11 +417,11 @@ const TPL={
       {title:'5. 차기 회의',body:'2026년 제  회 QPS위원회 — 일정 추후 공지'},
     ],
     suggests:[
-      {who:'병원장님',text:''},
-      {who:'QPS실장님',text:''},
-      {who:'사무국장님',text:''},
-      {who:'원무부장님',text:''},
-      {who:'간호부장님',text:''},
+      {who:'병원장',text:''},
+      {who:'QPS실장',text:''},
+      {who:'사무국장',text:''},
+      {who:'원무부장',text:''},
+      {who:'간호부장',text:''},
     ],
     resolutions:[
       {title:'보고사항 원안 동의',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
