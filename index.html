@@ -645,9 +645,7 @@ function downloadWord(){
     // 블록 사이 구분 여백 (첫 항목 제외)
     const sep = idx>0 && !c.pgbreak ? `<tr><td colspan="4" style="border:none;height:6pt;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
-      // disc 블록은 별도 미니 테이블로 감싸서 페이지 중간에 끊기지 않도록 함
-      const discTable = `<table style="border-collapse:collapse;width:100%;mso-table-overlap:never;" cellspacing="0">
-<tr>
+      return sep+brk+`<tr>
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${c.title||''}</td>
 </tr>
 <tr>
@@ -667,9 +665,7 @@ function downloadWord(){
 <tr>
   <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">완료예정</td>
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
-</tr>
-</table>`;
-      return sep+brk+`<tr><td colspan="4" style="border:none;padding:0;">${discTable}</td></tr>`;
+</tr>`;
     }
     return sep+brk+`<tr>
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
@@ -808,15 +804,6 @@ table.disc{
   padding-top:3pt;
   text-align:right;
 }
-
-/* 행 단위로 페이지가 끊기지 않도록(셀 중간에서 잘려서 테두리가 끊기는 문제 방지) */
-tr{
-  page-break-inside:avoid;
-  mso-yfti-irow:0;
-}
-table{
-  page-break-inside:auto;
-}
 </style>
 </head>
 <body>
@@ -824,7 +811,7 @@ table{
 
 <h1 style="font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;font-size:14pt;font-weight:bold;color:#1B3A6B;text-align:center;padding-bottom:8pt;margin-bottom:10pt;border-bottom:2pt solid #1B3A6B;">${d.title||'QPS위원회 회의록'}</h1>
 
-<table style="border-collapse:collapse;width:100%;mso-table-overlap:never;">
+<table style="border-collapse:collapse;width:100%;">
   <tr>
     <td style="${S_LBL}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
     <td style="${S_TD}border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
@@ -845,7 +832,7 @@ table{
   <tr>
     <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
     <td colspan="3" style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;mso-table-overlap:never;"><tbody>${agRows}</tbody></table>
+      <table style="border-collapse:collapse;width:100%;"><tbody>${agRows}</tbody></table>
     </td>
   </tr>
   <tr>
@@ -862,17 +849,17 @@ table{
 <!-- 2페이지 시작 -->
 <br class="page-break">
 
-<table style="border-collapse:collapse;width:100%;mso-table-overlap:never;">
+<table style="border-collapse:collapse;width:100%;">
   <tr>
     <td style="${S_SEC}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">건의사항<br>및<br>기타의견</td>
     <td style="${S_TD}padding:0pt;border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;mso-table-overlap:never;"><tbody>${sgRows}</tbody></table>
+      <table style="border-collapse:collapse;width:100%;"><tbody>${sgRows}</tbody></table>
     </td>
   </tr>
   <tr>
     <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">붙임자료</td>
     <td style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;mso-table-overlap:never;"><tbody>${atRows}</tbody></table>
+      <table style="border-collapse:collapse;width:100%;"><tbody>${atRows}</tbody></table>
     </td>
   </tr>
 </table>
