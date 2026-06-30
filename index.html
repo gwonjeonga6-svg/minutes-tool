@@ -628,6 +628,12 @@ function downloadWord(){
   const ds=`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
   const tl=d.meetingType==='임시'?'□ 정기회의　■ 임시회의':'■ 정기회의　□ 임시회의';
 
+  // Word HTML 임포터는 클래스 선택자를 무시하는 경우가 있어 모든 스타일을 인라인으로 처리
+  const S_TD = 'border:1pt solid #94A3B8;padding:3pt 5pt;vertical-align:top;line-height:1.5;font-size:10pt;font-family:\'나눔고딕\',\'Nanum Gothic\',\'맑은 고딕\',sans-serif;';
+  const S_LBL = S_TD+'font-weight:bold;color:#1B3A6B;width:52pt;text-align:center;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B;';
+  const S_SEC = S_TD+'font-weight:bold;color:#1B3A6B;text-align:center;width:52pt;vertical-align:top;white-space:nowrap;border-right:1.5pt solid #1B3A6B;padding-top:5pt;';
+  const S_INNER_TD = 'border:1pt solid #94A3B8;padding:2pt 5pt;line-height:1.5;font-size:10pt;font-family:\'나눔고딕\',\'Nanum Gothic\',\'맑은 고딕\',sans-serif;';
+
   // 안건 행
   const agRows=(d.agendas||[]).map((a,i)=>
     `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
@@ -678,16 +684,19 @@ function downloadWord(){
   ).join('');
 
   // 사진 — Word HTML 임포터에서 base64 이미지가 깨지는 문제가 있어
-  // 워드 파일에는 빈 칸만 만들고, 사용자가 워드에서 직접 사진을 삽입하도록 안내
+  // 워드 파일에는 빈 칸 2개만 만들고, 사용자가 워드에서 직접 사진을 삽입하도록 안내
   const phRow=`
 <tr>
   <td class="lbl" style="vertical-align:middle;">회의사진</td>
-  <td colspan="3" style="padding:14pt 4pt;text-align:center;color:#9199a8;font-size:9pt;">
-    (이 칸에 회의사진을 삽입하세요 — 삽입 ▸ 그림)
+  <td colspan="3" style="padding:0pt;">
+    <table style="border:none;width:100%;border-collapse:collapse;"><tr>
+      <td style="border:1pt dashed #94A3B8;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 1 삽입 — 삽입 ▸ 그림)</td>
+      <td style="border:1pt dashed #94A3B8;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 2 삽입 — 삽입 ▸ 그림)</td>
+    </tr></table>
   </td>
 </tr>`;
 
-  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:v='urn:schemas-microsoft-com:vml' xmlns='http://www.w3.org/TR/REC-html40'>
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head>
 <meta charset='utf-8'>
 <xml>
@@ -799,37 +808,37 @@ table.disc{
 
 <h1>${d.title||'QPS위원회 회의록'}</h1>
 
-<table class="main">
+<table style="border-collapse:collapse;width:100%;">
   <tr>
-    <td class="lbl" style="border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
-    <td style="border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
-    <td class="lbl" style="width:36pt;border-top:2pt solid #1B3A6B;">장소</td>
-    <td style="border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">${d.meetingPlace||''}</td>
+    <td style="${S_LBL}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
+    <td style="${S_TD}border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
+    <td style="${S_LBL}width:36pt;border-top:2pt solid #1B3A6B;">장소</td>
+    <td style="${S_TD}border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">${d.meetingPlace||''}</td>
   </tr>
   <tr>
-    <td class="lbl" style="border-left:2pt solid #1B3A6B;">참석대상</td>
-    <td>${d.attendees||''}</td>
-    <td class="lbl">간사</td>
-    <td style="border-right:2pt solid #1B3A6B;">${d.secretary||''}</td>
+    <td style="${S_LBL}border-left:2pt solid #1B3A6B;">참석대상</td>
+    <td style="${S_TD}">${d.attendees||''}</td>
+    <td style="${S_LBL}">간사</td>
+    <td style="${S_TD}border-right:2pt solid #1B3A6B;">${d.secretary||''}</td>
   </tr>
   <tr>
-    <td class="lbl" style="border-left:2pt solid #1B3A6B;">회의구분</td>
-    <td colspan="3" style="border-right:2pt solid #1B3A6B;">${tl}</td>
+    <td style="${S_LBL}border-left:2pt solid #1B3A6B;">회의구분</td>
+    <td colspan="3" style="${S_TD}border-right:2pt solid #1B3A6B;">${tl}</td>
   </tr>
   ${phRow}
   <tr>
-    <td class="lbl" style="vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
-    <td colspan="3" style="padding:2pt 4pt;border-right:2pt solid #1B3A6B;">
-      <table class="inner"><tbody>${agRows}</tbody></table>
+    <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
+    <td colspan="3" style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;">
+      <table style="border-collapse:collapse;width:100%;"><tbody>${agRows}</tbody></table>
     </td>
   </tr>
   <tr>
-    <td class="sec" rowspan="2" style="border-left:2pt solid #1B3A6B;">회의내용<br>및<br>의결사항</td>
-    <td colspan="3" style="white-space:pre-wrap;padding:4pt 6pt;border-right:2pt solid #1B3A6B;">${d.opening||''}</td>
+    <td rowspan="2" style="${S_SEC}border-left:2pt solid #1B3A6B;">회의내용<br>및<br>의결사항</td>
+    <td colspan="3" style="${S_TD}white-space:pre-wrap;padding:4pt 6pt;border-right:2pt solid #1B3A6B;">${d.opening||''}</td>
   </tr>
   <tr>
-    <td colspan="3" style="padding:4pt 6pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
-      <table class="disc"><tbody>${ctRows}</tbody></table>
+    <td colspan="3" style="${S_TD}padding:4pt 6pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
+      <table style="border-collapse:collapse;width:100%;margin-bottom:4pt;"><tbody>${ctRows}</tbody></table>
     </td>
   </tr>
 </table>
@@ -837,17 +846,17 @@ table.disc{
 <!-- 2페이지 시작 -->
 <br class="page-break">
 
-<table class="main">
+<table style="border-collapse:collapse;width:100%;">
   <tr>
-    <td class="sec" style="border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">건의사항<br>및<br>기타의견</td>
-    <td style="padding:0pt;border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">
-      <table class="inner"><tbody>${sgRows}</tbody></table>
+    <td style="${S_SEC}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">건의사항<br>및<br>기타의견</td>
+    <td style="${S_TD}padding:0pt;border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">
+      <table style="border-collapse:collapse;width:100%;"><tbody>${sgRows}</tbody></table>
     </td>
   </tr>
   <tr>
-    <td class="lbl" style="vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">붙임자료</td>
-    <td style="padding:2pt 4pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
-      <table class="inner"><tbody>${atRows}</tbody></table>
+    <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">붙임자료</td>
+    <td style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
+      <table style="border-collapse:collapse;width:100%;"><tbody>${atRows}</tbody></table>
     </td>
   </tr>
 </table>
