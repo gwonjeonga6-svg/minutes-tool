@@ -77,6 +77,19 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .content-body:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
 .row-del{float:right;background:none;border:none;color:#CBD5E1;font-size:13px;cursor:pointer;padding:2px 4px;}
 .row-del:hover{color:#DC2626;}
+.pgbreak-btn{
+  float:right;background:#F1F5F9;border:1px solid #CBD5E1;color:#64748B;
+  font-size:10px;font-weight:700;cursor:pointer;padding:3px 8px;border-radius:4px;
+  margin-right:4px;font-family:inherit;
+}
+.pgbreak-btn:hover{background:#E2E8F0;}
+.pgbreak-btn.active{background:#FEF3C7;border-color:#F59E0B;color:#92400E;}
+.content-row.manual-pgbreak{border-top:2px dashed #F59E0B;padding-top:8px;margin-top:6px;position:relative;}
+.content-row.manual-pgbreak::before{
+  content:"📄 새 페이지 시작";
+  position:absolute;top:-9px;left:11px;background:#FEF3C7;color:#92400E;
+  font-size:10px;font-weight:700;padding:1px 8px;border-radius:8px;
+}
 
 /* 건의사항 행 */
 .suggest-row{display:flex;border-bottom:1px solid #E2E8F0;}
@@ -167,6 +180,13 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   .photo-grid{padding:4px 6px;gap:6px;}
   .photo-slot{border:1px solid #CBD5E1!important;background:#fff;min-height:120px;}
   .photo-slot img{max-height:120px;}
+
+  /* 사용자 지정 페이지 나누기 */
+  .content-row.manual-pgbreak{
+    page-break-before:always!important;
+    border-top:2px solid #1B3A6B!important;
+    margin-top:0!important;padding-top:6px!important;
+  }
 
   /* 2페이지 고정 — 건의사항부터 새 페이지 시작 */
   #suggest-table{page-break-before:always!important;border-top:2px solid #1B3A6B!important;}
@@ -373,11 +393,21 @@ function renumAg(){
   agCnt=document.querySelectorAll('#agendaList .item-row').length;
 }
 
+// ── 페이지 나누기 토글 ──
+function togglePageBreak(btn){
+  const row=btn.closest('.content-row');
+  row.classList.toggle('manual-pgbreak');
+  btn.classList.toggle('active');
+  btn.textContent = row.classList.contains('manual-pgbreak') ? '✓ 여기서 페이지 나뉨' : '⤓ 페이지 나눔';
+  autoSave();
+}
+
 function addContent(title='',body=''){
   const d=document.getElementById('contentList');
   const div=document.createElement('div');
   div.className='content-row';
   div.innerHTML=`<button class="row-del no-print" onclick="this.closest('.content-row').remove()">✕</button>
+    <button class="pgbreak-btn no-print" onclick="togglePageBreak(this)" title="이 항목 앞에서 페이지 나누기">⤓ 페이지 나눔</button>
     <div class="content-title" contenteditable="true" data-placeholder="소제목 (예: 1. 보고사항)">${title}</div>
     <div class="content-body" contenteditable="true" data-placeholder="내용...">${body}</div>`;
   d.appendChild(div);
@@ -389,6 +419,7 @@ function addDiscussion(title='',status='',decision='',action='',owner='',due='')
   div.className='content-row';
   div.dataset.type='disc';
   div.innerHTML=`<button class="row-del no-print" onclick="this.closest('.content-row').remove()">✕</button>
+    <button class="pgbreak-btn no-print" onclick="togglePageBreak(this)" title="이 항목 앞에서 페이지 나누기">⤓ 페이지 나눔</button>
     <table class="disc-table">
       <tr><td colspan="4" class="disc-title" contenteditable="true" data-placeholder="[논의] 안건 제목">${title}</td></tr>
       <tr>
@@ -509,9 +540,10 @@ function getData(){
     opening:document.getElementById('opening').textContent,
     agendas:[...document.querySelectorAll('#agendaList .item-text')].map(el=>el.innerHTML),
     contents:[...document.querySelectorAll('#contentList .content-row')].map(el=>{
+      const pgbreak=el.classList.contains('manual-pgbreak');
       if(el.dataset.type==='disc'){
         return{
-          type:'disc',
+          type:'disc',pgbreak,
           title:el.querySelector('.disc-title')?.innerHTML||'',
           status:el.querySelector('tr:nth-child(2) .disc-val')?.innerHTML||'',
           decision:el.querySelector('tr:nth-child(3) .disc-val')?.innerHTML||'',
@@ -520,7 +552,7 @@ function getData(){
           due:el.querySelector('tr:nth-child(5) .disc-val')?.innerHTML||''
         };
       }
-      return{type:'text',title:el.querySelector('.content-title')?.innerHTML||'',body:el.querySelector('.content-body')?.innerHTML||''};
+      return{type:'text',pgbreak,title:el.querySelector('.content-title')?.innerHTML||'',body:el.querySelector('.content-body')?.innerHTML||''};
     }),
     suggests:[...document.querySelectorAll('#suggestList .suggest-row')].map(el=>({
       who:el.querySelector('.suggest-who')?.textContent||'',
@@ -567,6 +599,13 @@ function applyData(d){
   (d.contents||[]).forEach(c=>{
     if(c.type==='disc') addDiscussion(c.title,c.status||'',c.decision||'',c.action||'',c.owner||'',c.due||'');
     else addContent(c.title,c.body||'');
+    if(c.pgbreak){
+      const list=document.getElementById('contentList');
+      const lastRow=list.lastElementChild;
+      lastRow.classList.add('manual-pgbreak');
+      const btn=lastRow.querySelector('.pgbreak-btn');
+      if(btn){ btn.classList.add('active'); btn.textContent='✓ 여기서 페이지 나뉨'; }
+    }
   });
   document.getElementById('suggestList').innerHTML='';
   (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
@@ -596,8 +635,9 @@ function downloadWord(){
 
   // 회의내용 행 (보고사항 + 논의사항)
   const ctRows=(d.contents||[]).map(c=>{
+    const brk = c.pgbreak ? `<tr><td colspan="4" style="border:none;mso-special-character:line-break;page-break-before:always;height:0;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
-      return `<tr>
+      return brk+`<tr>
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 6pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
 </tr>
 <tr>
@@ -619,7 +659,7 @@ function downloadWord(){
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
 </tr>`;
     }
-    return `<tr>
+    return brk+`<tr>
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #E2E8F0;">${c.title||''}</td>
 </tr>
 <tr>
