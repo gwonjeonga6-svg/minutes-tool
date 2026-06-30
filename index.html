@@ -587,56 +587,243 @@ function downloadWord(){
   const d=getData();
   const now=new Date();
   const ds=`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
-  const tl=d.meetingType==='임시'?'□ 정기회의&nbsp;&nbsp;■ 임시회의':'■ 정기회의&nbsp;&nbsp;□ 임시회의';
-  const agRows=(d.agendas||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;font-weight:bold;">${i+1}.</td><td>${a}</td></tr>`).join('');
+  const tl=d.meetingType==='임시'?'□ 정기회의　■ 임시회의':'■ 정기회의　□ 임시회의';
+
+  // 안건 행
+  const agRows=(d.agendas||[]).map((a,i)=>
+    `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
+  ).join('');
+
+  // 회의내용 행 (보고사항 + 논의사항)
   const ctRows=(d.contents||[]).map(c=>{
     if(c.type==='disc'){
-      return `<tr><td colspan="2" style="font-weight:bold;color:#1B3A6B;padding:3px 6px;">${c.title||''}</td></tr>
-<tr><td style="width:55pt;font-weight:bold;color:#1B3A6B;">현황</td><td style="white-space:pre-wrap;">${c.status||'&nbsp;'}</td></tr>
-<tr><td style="font-weight:bold;color:#1B3A6B;">의결내용</td><td style="white-space:pre-wrap;">${c.decision||'&nbsp;'}</td></tr>
-<tr><td style="font-weight:bold;color:#1B3A6B;">이행사항</td><td>${c.action||'&nbsp;'}&nbsp;<b>담당:</b>${c.owner||''}&nbsp;<b>완료:</b>${c.due||''}</td></tr>`;
+      return `<tr>
+  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 6pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
+</tr>
+<tr>
+  <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
+  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.status||'　'}</td>
+</tr>
+<tr>
+  <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">의결내용</td>
+  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.decision||'　'}</td>
+</tr>
+<tr>
+  <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">이행사항</td>
+  <td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.action||'　'}</td>
+  <td style="width:28pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">담당</td>
+  <td style="width:52pt;border:1pt solid #94A3B8;padding:2pt 4pt;">${c.owner||'　'}</td>
+</tr>
+<tr>
+  <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">완료예정</td>
+  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
+</tr>`;
     }
-    return `<tr><td colspan="2" style="font-weight:bold;color:#1B3A6B;padding:3px 6px;">${c.title||''}</td></tr>
-<tr><td colspan="2" style="white-space:pre-wrap;padding:3px 6px;line-height:1.6;">${c.body||'&nbsp;'}</td></tr>`;
+    return `<tr>
+  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #E2E8F0;">${c.title||''}</td>
+</tr>
+<tr>
+  <td colspan="4" style="padding:2pt 2pt 4pt 2pt;border:none;white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</td>
+</tr>`;
   }).join('');
-  const sgRows=(d.suggests||[]).map(s=>`<tr><td style="width:55pt;font-weight:bold;text-align:center;">[${s.who||''}]</td><td style="white-space:pre-wrap;">${s.text||'&nbsp;'}</td></tr>`).join('');
-  const atRows=(d.attaches||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;">${i+1}.</td><td>${a}</td></tr>`).join('');
-  const phHtml=(d.photo1||d.photo2)?`<tr><td class="lbl">회의사진</td><td colspan="3"><table><tr>${d.photo1?`<td><img src="${d.photo1}" style="max-width:180pt;max-height:110pt"></td>`:''}${d.photo2?`<td><img src="${d.photo2}" style="max-width:180pt;max-height:110pt"></td>`:''}</tr></table></td></tr>`:'';
+
+  // 건의사항 행
+  const sgRows=(d.suggests||[]).map(s=>
+    `<tr><td style="width:52pt;font-weight:bold;text-align:center;vertical-align:top;border:1pt solid #94A3B8;padding:2pt 4pt;">${s.who||''}</td><td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${s.text||'　'}</td></tr>`
+  ).join('') || `<tr><td style="border:none;padding:14pt 4pt;">&nbsp;</td></tr>`;
+
+  // 붙임자료 행
+  const atRows=(d.attaches||[]).map((a,i)=>
+    `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
+  ).join('');
+
+  // 사진
+  const phRow=(d.photo1||d.photo2)?`
+<tr>
+  <td class="lbl" style="vertical-align:middle;">회의사진</td>
+  <td colspan="3" style="padding:4pt;text-align:center;">
+    <table style="border:none;width:100%;border-collapse:collapse;"><tr>
+      ${d.photo1?`<td style="border:none;text-align:center;padding:2pt;"><img src="${d.photo1}" style="max-width:200pt;max-height:130pt;"></td>`:'<td style="border:none;"></td>'}
+      ${d.photo2?`<td style="border:none;text-align:center;padding:2pt;"><img src="${d.photo2}" style="max-width:200pt;max-height:130pt;"></td>`:'<td style="border:none;"></td>'}
+    </tr></table>
+  </td>
+</tr>`:'' ;
 
   const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml>
+<head>
+<meta charset='utf-8'>
+<xml>
+  <w:WordDocument>
+    <w:View>Print</w:View>
+    <w:Zoom>100</w:Zoom>
+    <w:DoNotOptimizeForBrowser/>
+  </w:WordDocument>
+</xml>
 <style>
-@page Section1{size:595pt 842pt;margin:42pt 42pt 50pt 42pt;}
+@page Section1{
+  size:21cm 29.7cm;
+  margin:20mm 18mm 22mm 18mm;
+  mso-header-margin:10mm;
+  mso-footer-margin:10mm;
+}
 div.Section1{page:Section1;}
-body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;font-size:9.5pt;line-height:1.5;}
-h1{font-size:14pt;color:#1B3A6B;text-align:center;border-bottom:2pt solid #1B3A6B;padding-bottom:7px;font-weight:800;margin-bottom:0;}
-table.main{border-collapse:collapse;width:100%;font-size:9pt;border:2pt solid #1B3A6B;}
-table.main td{border:1pt solid #94A3B8;padding:3px 6px;vertical-align:top;line-height:1.5;}
-.lbl{font-weight:bold;color:#1B3A6B;width:60pt;text-align:center;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B!important;}
-.sec{color:#1B3A6B;font-weight:bold;text-align:center;width:60pt;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B!important;}
-table.inner{border-collapse:collapse;width:100%;font-size:9pt;}
-table.inner td{border:1pt solid #94A3B8;padding:2px 5px;line-height:1.5;}
-.footer{margin-top:10px;font-size:7.5pt;color:#888;border-top:1pt solid #dde1e9;padding-top:4px;text-align:right;}
-</style></head>
-<body><div class="Section1">
+
+body{
+  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+  font-size:10pt;
+  line-height:1.5;
+  color:#1E293B;
+}
+
+h1{
+  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+  font-size:14pt;
+  font-weight:bold;
+  color:#1B3A6B;
+  text-align:center;
+  padding-bottom:6pt;
+  margin-bottom:0;
+  border-bottom:2pt solid #1B3A6B;
+}
+
+/* 메인 표 */
+table.main{
+  border-collapse:collapse;
+  width:100%;
+  font-size:10pt;
+  border:2pt solid #1B3A6B;
+  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+}
+table.main td{
+  border:1pt solid #94A3B8;
+  padding:3pt 5pt;
+  vertical-align:top;
+  line-height:1.5;
+  font-size:10pt;
+}
+
+/* 레이블 셀 */
+.lbl{
+  font-weight:bold;
+  color:#1B3A6B;
+  width:52pt;
+  text-align:center;
+  vertical-align:middle;
+  white-space:nowrap;
+  border-right:1.5pt solid #1B3A6B;
+}
+.sec{
+  color:#1B3A6B;
+  font-weight:bold;
+  text-align:center;
+  width:52pt;
+  vertical-align:top;
+  white-space:nowrap;
+  border-right:1.5pt solid #1B3A6B;
+  padding-top:5pt;
+}
+
+/* 내부 표 (안건/붙임) */
+table.inner{
+  border-collapse:collapse;
+  width:100%;
+  font-size:10pt;
+  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+}
+
+/* 논의사항 내부 표 */
+table.disc{
+  border-collapse:collapse;
+  width:100%;
+  font-size:10pt;
+  margin-bottom:4pt;
+  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+}
+
+/* 2페이지 강제 */
+.page-break{
+  page-break-before:always;
+  mso-break-type:section-break;
+}
+
+.footer{
+  margin-top:8pt;
+  font-size:8pt;
+  color:#94A3B8;
+  border-top:1pt solid #E2E8F0;
+  padding-top:3pt;
+  text-align:right;
+}
+</style>
+</head>
+<body>
+<div class="Section1">
+
 <h1>${d.title||'QPS위원회 회의록'}</h1>
+
 <table class="main">
-<tr><td class="lbl">회의일시</td><td>${d.meetingDate||''}</td><td class="lbl" style="width:40pt">장소</td><td>${d.meetingPlace||''}</td></tr>
-<tr><td class="lbl">참석대상</td><td>${d.attendees||''}</td><td class="lbl">간사</td><td>${d.secretary||''}</td></tr>
-<tr><td class="lbl">회의구분</td><td colspan="3">${tl}</td></tr>
-${phHtml}
-<tr><td class="lbl" style="vertical-align:top;">안&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;건</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${agRows}</table></td></tr>
-<tr><td class="sec" rowspan="2">회의내용<br>및<br>의결사항</td><td colspan="3" style="white-space:pre-wrap;">${d.opening||''}</td></tr>
-<tr><td colspan="3" style="padding:0"><table class="inner" style="border:none">${ctRows}</table></td></tr>
-<tr><td class="sec">건의사항<br>및<br>기타의견</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${sgRows||'<tr><td>&nbsp;</td></tr>'}</table></td></tr>
-<tr><td class="lbl" style="vertical-align:top;">붙임자료</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${atRows}</table></td></tr>
+  <tr>
+    <td class="lbl">회의일시</td>
+    <td>${d.meetingDate||''}</td>
+    <td class="lbl" style="width:36pt;">장소</td>
+    <td>${d.meetingPlace||''}</td>
+  </tr>
+  <tr>
+    <td class="lbl">참석대상</td>
+    <td>${d.attendees||''}</td>
+    <td class="lbl">간사</td>
+    <td>${d.secretary||''}</td>
+  </tr>
+  <tr>
+    <td class="lbl">회의구분</td>
+    <td colspan="3">${tl}</td>
+  </tr>
+  ${phRow}
+  <tr>
+    <td class="lbl" style="vertical-align:top;padding-top:4pt;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
+    <td colspan="3" style="padding:2pt 4pt;">
+      <table class="inner"><tbody>${agRows}</tbody></table>
+    </td>
+  </tr>
+  <tr>
+    <td class="sec" rowspan="2">회의내용<br>및<br>의결사항</td>
+    <td colspan="3" style="white-space:pre-wrap;padding:4pt 6pt;">${d.opening||''}</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="padding:4pt 6pt;">
+      <table class="disc"><tbody>${ctRows}</tbody></table>
+    </td>
+  </tr>
 </table>
-<div class="footer">작성일: ${ds} &nbsp;|&nbsp; 좋은삼선병원 QPS팀</div>
-</div></body></html>`;
+
+<!-- 2페이지 시작 -->
+<br class="page-break">
+
+<table class="main" style="border-top:2pt solid #1B3A6B;">
+  <tr>
+    <td class="sec">건의사항<br>및<br>기타의견</td>
+    <td style="padding:0pt;">
+      <table class="inner"><tbody>${sgRows}</tbody></table>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl" style="vertical-align:top;padding-top:4pt;">붙임자료</td>
+    <td style="padding:2pt 4pt;">
+      <table class="inner"><tbody>${atRows}</tbody></table>
+    </td>
+  </tr>
+</table>
+
+<div class="footer">작성일: ${ds}&nbsp;&nbsp;|&nbsp;&nbsp;좋은삼선병원 QPS팀</div>
+
+</div>
+</body></html>`;
 
   const b=new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'});
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(b); a.download=`${d.title||'회의록'}_${ds}.doc`; a.click();
+  a.href=URL.createObjectURL(b);
+  a.download=`${d.title||'회의록'}_${ds}.doc`;
+  a.click();
 }
 
 // ── 자동저장 ──
