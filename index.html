@@ -168,6 +168,12 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   .photo-slot{border:1px solid #CBD5E1!important;background:#fff;min-height:120px;}
   .photo-slot img{max-height:120px;}
 
+  /* 2페이지 고정 — 건의사항부터 새 페이지 시작 */
+  #suggest-table{page-break-before:always!important;border-top:2px solid #1B3A6B!important;}
+
+  /* 붙임자료 번호 간격 */
+  #attachList .item-num{min-width:16px!important;}
+
   .print-pagenum{display:block!important;text-align:right;font-size:7.5pt;color:#94A3B8;padding-top:4px;border-top:1px solid #E2E8F0;margin-top:6px;}
 }
 .print-pagenum{display:none;}
@@ -285,8 +291,8 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   </tr>
 </table>
 
-<!-- ⑦ 건의사항 -->
-<table class="sec-table">
+<!-- ⑦ 건의사항 — 항상 2페이지 시작 -->
+<table class="sec-table" id="suggest-table">
   <tr>
     <td class="sec-lbl">건의사항<br>및<br>기타의견</td>
     <td style="padding:0">
