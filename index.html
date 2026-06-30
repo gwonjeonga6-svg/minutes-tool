@@ -801,34 +801,34 @@ table.disc{
 
 <table class="main">
   <tr>
-    <td class="lbl">회의일시</td>
-    <td>${d.meetingDate||''}</td>
-    <td class="lbl" style="width:36pt;">장소</td>
-    <td>${d.meetingPlace||''}</td>
+    <td class="lbl" style="border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
+    <td style="border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
+    <td class="lbl" style="width:36pt;border-top:2pt solid #1B3A6B;">장소</td>
+    <td style="border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">${d.meetingPlace||''}</td>
   </tr>
   <tr>
-    <td class="lbl">참석대상</td>
+    <td class="lbl" style="border-left:2pt solid #1B3A6B;">참석대상</td>
     <td>${d.attendees||''}</td>
     <td class="lbl">간사</td>
-    <td>${d.secretary||''}</td>
+    <td style="border-right:2pt solid #1B3A6B;">${d.secretary||''}</td>
   </tr>
   <tr>
-    <td class="lbl">회의구분</td>
-    <td colspan="3">${tl}</td>
+    <td class="lbl" style="border-left:2pt solid #1B3A6B;">회의구분</td>
+    <td colspan="3" style="border-right:2pt solid #1B3A6B;">${tl}</td>
   </tr>
   ${phRow}
   <tr>
-    <td class="lbl" style="vertical-align:top;padding-top:4pt;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
-    <td colspan="3" style="padding:2pt 4pt;">
+    <td class="lbl" style="vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
+    <td colspan="3" style="padding:2pt 4pt;border-right:2pt solid #1B3A6B;">
       <table class="inner"><tbody>${agRows}</tbody></table>
     </td>
   </tr>
   <tr>
-    <td class="sec" rowspan="2">회의내용<br>및<br>의결사항</td>
-    <td colspan="3" style="white-space:pre-wrap;padding:4pt 6pt;">${d.opening||''}</td>
+    <td class="sec" rowspan="2" style="border-left:2pt solid #1B3A6B;">회의내용<br>및<br>의결사항</td>
+    <td colspan="3" style="white-space:pre-wrap;padding:4pt 6pt;border-right:2pt solid #1B3A6B;">${d.opening||''}</td>
   </tr>
   <tr>
-    <td colspan="3" style="padding:4pt 6pt;">
+    <td colspan="3" style="padding:4pt 6pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
       <table class="disc"><tbody>${ctRows}</tbody></table>
     </td>
   </tr>
@@ -837,16 +837,16 @@ table.disc{
 <!-- 2페이지 시작 -->
 <br class="page-break">
 
-<table class="main" style="border-top:2pt solid #1B3A6B;">
+<table class="main">
   <tr>
-    <td class="sec">건의사항<br>및<br>기타의견</td>
-    <td style="padding:0pt;">
+    <td class="sec" style="border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">건의사항<br>및<br>기타의견</td>
+    <td style="padding:0pt;border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">
       <table class="inner"><tbody>${sgRows}</tbody></table>
     </td>
   </tr>
   <tr>
-    <td class="lbl" style="vertical-align:top;padding-top:4pt;">붙임자료</td>
-    <td style="padding:2pt 4pt;">
+    <td class="lbl" style="vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">붙임자료</td>
+    <td style="padding:2pt 4pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
       <table class="inner"><tbody>${atRows}</tbody></table>
     </td>
   </tr>
