@@ -640,11 +640,13 @@ function downloadWord(){
   ).join('');
 
   // 회의내용 행 (보고사항 + 논의사항)
-  const ctRows=(d.contents||[]).map(c=>{
+  const ctRows=(d.contents||[]).map((c,idx)=>{
     const brk = c.pgbreak ? `<tr><td colspan="4" style="border:none;mso-special-character:line-break;page-break-before:always;height:0;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
+    // 블록 사이 구분 여백 (첫 항목 제외)
+    const sep = idx>0 && !c.pgbreak ? `<tr><td colspan="4" style="border:none;height:6pt;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
-      return brk+`<tr>
-  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 6pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
+      return sep+brk+`<tr>
+  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${c.title||''}</td>
 </tr>
 <tr>
   <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
@@ -665,8 +667,8 @@ function downloadWord(){
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
 </tr>`;
     }
-    return brk+`<tr>
-  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #E2E8F0;">${c.title||''}</td>
+    return sep+brk+`<tr>
+  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
 </tr>
 <tr>
   <td colspan="4" style="padding:2pt 2pt 4pt 2pt;border:none;white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</td>
@@ -688,10 +690,11 @@ function downloadWord(){
   const phRow=`
 <tr>
   <td class="lbl" style="vertical-align:middle;">회의사진</td>
-  <td colspan="3" style="padding:0pt;">
+  <td colspan="3" style="padding:6pt;">
     <table style="border:none;width:100%;border-collapse:collapse;"><tr>
-      <td style="border:1pt dashed #94A3B8;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 1 삽입 — 삽입 ▸ 그림)</td>
-      <td style="border:1pt dashed #94A3B8;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 2 삽입 — 삽입 ▸ 그림)</td>
+      <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 1 삽입 — 삽입 ▸ 그림)</td>
+      <td style="border:none;width:8pt;"></td>
+      <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:18pt 4pt;width:50%;">(사진 2 삽입 — 삽입 ▸ 그림)</td>
     </tr></table>
   </td>
 </tr>`;
@@ -806,7 +809,7 @@ table.disc{
 <body>
 <div class="Section1">
 
-<h1>${d.title||'QPS위원회 회의록'}</h1>
+<h1 style="font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;font-size:14pt;font-weight:bold;color:#1B3A6B;text-align:center;padding-bottom:8pt;margin-bottom:10pt;border-bottom:2pt solid #1B3A6B;">${d.title||'QPS위원회 회의록'}</h1>
 
 <table style="border-collapse:collapse;width:100%;">
   <tr>
