@@ -22,65 +22,65 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .doc{background:#fff;border:1px solid #CBD5E1;padding:36px 40px;}
 .doc-title{text-align:center;font-size:20px;font-weight:800;color:#1B3A6B;border-bottom:3px solid #1B3A6B;padding-bottom:10px;margin-bottom:0;}
 
-/* 메인 테이블 - 모든 섹션을 하나의 테이블로 */
-.main-table{width:100%;border-collapse:collapse;margin-top:-1px;border:2px solid #1B3A6B;outline:2px solid #1B3A6B;}
-.main-table td{border:1px solid #94A3B8;padding:8px 12px;font-size:13px;vertical-align:top;line-height:1.8;}
+/* 메인 테이블 */
+.main-table{width:100%;border-collapse:collapse;margin-top:-1px;border:2px solid #1B3A6B;}
+.main-table td{border:1px solid #94A3B8;padding:7px 11px;font-size:13px;vertical-align:top;line-height:1.7;}
 .main-table .lbl{background:#fff;font-weight:800;color:#1B3A6B;width:80px;text-align:center;vertical-align:middle;white-space:nowrap;border-right:2px solid #1B3A6B;}
 .main-table .sec-lbl{background:#fff;color:#1B3A6B;font-weight:800;text-align:center;white-space:nowrap;vertical-align:middle;width:80px;border-right:2px solid #1B3A6B;}
-.main-table .sec-content{padding:0;}
 
 /* 편집 */
-.editable{outline:none;cursor:text;min-height:18px;display:block;width:100%;line-height:1.8;}
+.editable{outline:none;cursor:text;min-height:18px;display:block;width:100%;line-height:1.7;}
 .editable:focus{background:#FAFBFF;}
 .editable:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
 
 /* 안건/붙임 행 */
-.item-row{display:flex;align-items:flex-start;gap:6px;padding:5px 12px;border-bottom:1px solid #94A3B8;}
+.item-row{display:flex;align-items:flex-start;gap:6px;padding:4px 11px;border-bottom:1px solid #E2E8F0;}
 .item-row:last-child{border-bottom:none;}
 .item-num{font-weight:700;color:#1B3A6B;min-width:22px;flex-shrink:0;padding-top:1px;}
-.item-text{flex:1;outline:none;min-height:18px;line-height:1.8;}
+.item-text{flex:1;outline:none;min-height:18px;line-height:1.7;}
 .item-text:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
 .item-del{background:none;border:none;color:#CBD5E1;font-size:13px;cursor:pointer;flex-shrink:0;padding:2px 4px;}
 .item-del:hover{color:#DC2626;}
 
 /* 내용 행 */
-.content-row{padding:8px 12px;border-bottom:1px solid #94A3B8;}
+.content-row{padding:6px 11px;border-bottom:1px solid #E2E8F0;}
 .content-row:last-child{border-bottom:none;}
-.content-title{font-weight:700;outline:none;width:100%;min-height:18px;line-height:1.8;display:block;color:#1B3A6B;}
+.content-title{font-weight:700;outline:none;width:100%;min-height:18px;line-height:1.7;display:block;color:#1B3A6B;}
 .content-title:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;font-weight:400;}
-.content-body{outline:none;width:100%;min-height:40px;line-height:1.8;display:block;margin-top:3px;white-space:pre-wrap;}
+.content-body{outline:none;width:100%;min-height:32px;line-height:1.7;display:block;margin-top:2px;white-space:pre-wrap;}
 .content-body:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
 .row-del{float:right;background:none;border:none;color:#CBD5E1;font-size:13px;cursor:pointer;padding:2px 4px;}
 .row-del:hover{color:#DC2626;}
 
 /* 건의사항 행 */
-.suggest-row{display:flex;border-bottom:1px solid #94A3B8;}
+.suggest-row{display:flex;border-bottom:1px solid #E2E8F0;}
 .suggest-row:last-child{border-bottom:none;}
-.suggest-who{min-width:90px;max-width:90px;background:#F8FAFC;font-weight:700;outline:none;padding:8px;border-right:1px solid #94A3B8;text-align:center;line-height:1.8;font-size:13px;}
+.suggest-who{min-width:80px;max-width:80px;font-weight:700;outline:none;padding:6px 8px;border-right:1px solid #94A3B8;text-align:center;line-height:1.7;font-size:13px;}
 .suggest-who:empty:before{content:'발언자';color:#94A3B8;font-style:italic;font-weight:400;}
-.suggest-text{flex:1;outline:none;padding:8px 12px;min-height:40px;line-height:1.8;white-space:pre-wrap;}
+.suggest-text{flex:1;outline:none;padding:6px 11px;min-height:28px;line-height:1.7;white-space:pre-wrap;}
 .suggest-text:empty:before{content:'발언 내용...';color:#94A3B8;font-style:italic;}
 
 /* 논의사항 표 */
 .disc-table{width:100%;border-collapse:collapse;margin:0;}
-.disc-table td{border:1px solid #94A3B8;padding:5px 8px;font-size:13px;line-height:1.6;vertical-align:top;}
-.disc-title{font-weight:800;color:#1B3A6B;background:#F0F4FF;font-size:13px;}
+.disc-table td{border:1px solid #94A3B8;padding:4px 8px;font-size:13px;line-height:1.6;vertical-align:top;}
+.disc-title{font-weight:800;color:#1B3A6B;font-size:13px;border-left:none!important;border-right:none!important;border-top:none!important;}
 .disc-title:empty:before{content:attr(data-placeholder);color:#94A3B8;font-weight:400;font-style:italic;}
-.disc-lbl{background:#F8FAFC;font-weight:700;color:#1B3A6B;width:72px;white-space:nowrap;text-align:center;}
-.disc-lbl2{background:#F8FAFC;font-weight:700;color:#1B3A6B;width:44px;white-space:nowrap;text-align:center;}
-.disc-val{outline:none;min-height:20px;}
+.disc-lbl{font-weight:700;color:#1B3A6B;width:72px;white-space:nowrap;text-align:center;border-left:none!important;}
+.disc-lbl2{font-weight:700;color:#1B3A6B;width:44px;white-space:nowrap;text-align:center;}
+.disc-val{outline:none;min-height:18px;border-right:none!important;}
 .disc-val:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
-.disc-val2{outline:none;width:80px;min-height:20px;}
+.disc-val2{outline:none;width:72px;min-height:18px;}
 .disc-val2:empty:before{content:attr(data-placeholder);color:#94A3B8;font-style:italic;}
-.add-btn{background:#EFF6FF;border:1px dashed #93C5FD;color:#1D4ED8;border-radius:0;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;text-align:left;}
+.add-btn{background:#EFF6FF;border:1px dashed #93C5FD;color:#1D4ED8;border-radius:0;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;text-align:left;}
 .add-btn:hover{background:#DBEAFE;}
+.add-btn-dark{background:#F0F4FF;border:1px dashed #1B3A6B;color:#1B3A6B;}
 
 /* 체크박스 */
 .check-row{display:flex;gap:20px;align-items:center;}
 .check-item{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;user-select:none;}
 
 /* 사진 */
-.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 12px;}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 11px;}
 .photo-slot{border:2px dashed #CBD5E1;border-radius:4px;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#F8FAFC;}
 .photo-slot:hover{border-color:#1B3A6B;}
 .photo-slot img{width:100%;max-height:150px;object-fit:cover;border-radius:3px;}
@@ -88,32 +88,95 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
 .photo-del{background:#FEE2E2;border:none;color:#DC2626;border-radius:3px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:inherit;margin-top:4px;}
 
 .no-print{display:block;}
+
+/* ===== 인쇄 ===== */
 @media print{
-  @page{size:A4 portrait;margin:12mm 12mm 18mm 12mm;}
+  @page{size:A4 portrait;margin:14mm 14mm 16mm 14mm;}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-  .toolbar,.no-print,.add-btn,.item-del,.row-del{display:none!important;}
-  body{background:#fff;line-height:1.5!important;}
+  .toolbar,.no-print,.add-btn,.add-btn-dark,.item-del,.row-del{display:none!important;}
+  body{background:#fff;font-size:9.5pt;line-height:1.4!important;}
   .doc-wrap{max-width:100%;margin:0;padding:0;}
   .doc{border:none;padding:0;}
-  .doc-title{font-size:14pt;}
-  .main-table{border:2px solid #1B3A6B!important;outline:2px solid #1B3A6B!important;}
-  .main-table td{font-size:8pt;padding:2px 5px;border:1px solid #94A3B8!important;line-height:1.5!important;}
-  .main-table .lbl,.main-table .sec-lbl{border-right:2px solid #1B3A6B!important;}
-  .editable,.content-title,.content-body,.item-text,.suggest-text{line-height:1.5!important;min-height:0!important;}
-  .content-body{min-height:0!important;}
-  .item-row{padding:1px 5px;page-break-inside:avoid;border-bottom:1px solid #94A3B8!important;}
-  .content-row{padding:2px 5px;page-break-inside:avoid;border-bottom:1px solid #94A3B8!important;}
-  .suggest-row{page-break-inside:avoid;border-bottom:1px solid #94A3B8!important;}
-  .suggest-who{padding:2px 5px;min-width:70px;max-width:70px;border-right:1px solid #94A3B8!important;font-size:8pt;}
+  .doc-title{font-size:13pt;padding-bottom:6px;margin-bottom:0;}
+
+  /* 바깥 테두리 굵게, 안쪽 가늘게 */
+  .main-table{border:2px solid #1B3A6B!important;}
+  .main-table td{
+    font-size:8.5pt;
+    padding:2px 5px;
+    line-height:1.35!important;
+    border:1px solid #94A3B8!important;
+  }
+  .main-table .lbl,.main-table .sec-lbl{
+    border-right:1.5px solid #1B3A6B!important;
+    font-size:8pt;
+    padding:2px 3px;
+  }
+
+  /* 편집 요소 */
+  .editable,.content-title,.content-body,.item-text,.suggest-text{
+    line-height:1.35!important;min-height:0!important;
+  }
+
+  /* 안건/붙임 */
+  .item-row{
+    padding:1px 5px;
+    border-bottom:1px solid #E2E8F0!important;
+  }
+  .item-row:last-child{border-bottom:none!important;}
+
+  /* 내용 행 */
+  .content-row{
+    padding:2px 5px;
+    border-bottom:1px solid #E2E8F0!important;
+    page-break-inside:avoid;
+  }
+  .content-row:last-child{border-bottom:none!important;}
+
+  /* 건의사항 */
+  .suggest-row{
+    border-bottom:1px solid #E2E8F0!important;
+    page-break-inside:avoid;
+  }
+  .suggest-row:last-child{border-bottom:none!important;}
+  .suggest-who{
+    padding:2px 4px;
+    min-width:60px;max-width:60px;
+    border-right:1px solid #94A3B8!important;
+    font-size:8pt;
+  }
   .suggest-text{padding:2px 5px;}
-  .suggest-row:last-child,.item-row:last-child,.content-row:last-child{border-bottom:none!important;}
-  .photo-grid{padding:4px;}
-  .photo-slot{border:1px solid #CBD5E1;background:#fff;min-height:80px;}
-  .photo-slot img{max-height:110px;}
-  .print-pagenum{display:block!important;text-align:right;font-size:8pt;color:#94A3B8;padding-top:4px;border-top:1px solid #E2E8F0;margin-top:6px;}
-  .disc-table td{font-size:8pt;padding:2px 5px;line-height:1.5!important;}
-  .disc-title{font-size:8pt;padding:2px 5px;}
+
+  /* 논의사항 표 */
+  .disc-table td{
+    font-size:8pt;
+    padding:1px 5px;
+    line-height:1.35!important;
+    border:1px solid #94A3B8!important;
+  }
+  .disc-title{
+    font-size:8.5pt;
+    padding:2px 5px;
+    border-left:none!important;
+    border-right:none!important;
+    border-top:none!important;
+  }
+  .disc-lbl{
+    border-left:none!important;
+    font-size:8pt;
+  }
+  .disc-val{border-right:none!important;}
+  .disc-val,.disc-val2{min-height:0!important;}
+
+  /* 사진 */
+  .photo-grid{padding:3px 5px;gap:6px;}
+  .photo-slot{border:1px solid #CBD5E1!important;background:#fff;min-height:0;}
+  .photo-slot img{max-height:100px;}
+
+  /* 섹션 테이블 row 페이지 분리 방지 */
   .main-table tr{page-break-inside:avoid;}
+
+  .print-pagenum{display:block!important;text-align:right;font-size:7pt;color:#94A3B8;padding-top:3px;border-top:1px solid #E2E8F0;margin-top:4px;}
 }
 .print-pagenum{display:none;}
 </style>
@@ -133,36 +196,13 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
     <button class="btn btn-gray" onclick="document.getElementById('loadFile').click()">📂 불러오기</button>
     <input type="file" id="loadFile" accept=".json" style="display:none" onchange="loadJSON(event)">
     <button class="btn btn-gray" onclick="resetAll()">🔄 새 회의록</button>
-    <button class="btn" style="background:#7C3AED;color:#fff;" onclick="showAIModal()">✨ AI 회의록 정리</button>
   </div>
 </div>
 
 <div class="doc-wrap">
-<!-- AI 모달 -->
-<div id="aiModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:12px;padding:28px;max-width:680px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
-    <div style="font-size:16px;font-weight:800;color:#1B3A6B;margin-bottom:6px;">✨ AI 회의록 자동 정리</div>
-    <div style="font-size:12px;color:#64748B;margin-bottom:14px;">PPT 발표 내용을 텍스트로 붙여넣으면 AI가 회의록 형식으로 정리해드려요.</div>
-    <textarea id="aiInput" placeholder="PPT 내용을 여기에 붙여넣기 하세요.&#10;&#10;예)&#10;QI 활동 진행 현황&#10;- 15개 팀 부서별 QI 진행 중&#10;- 완료 5팀, 진행 중 10팀&#10;&#10;[논의 1] 처방 투여방법 팝업 개선&#10;- 현황: 공란 시 IM 자동설정 오류&#10;- 개선안: 미입력 시 팝업 생성..." 
-      style="width:100%;min-height:220px;padding:12px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;font-family:'Nanum Gothic','맑은 고딕',sans-serif;resize:vertical;line-height:1.7;"></textarea>
-    <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
-      <button onclick="runAI()" style="background:#7C3AED;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✨ AI 정리 시작</button>
-      <button onclick="closeAIModal()" style="background:#F1F5F9;color:#475569;border:1px solid #E2E8F0;border-radius:7px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;">닫기</button>
-      <span id="aiStatus" style="font-size:12px;color:#7C3AED;margin-left:4px;"></span>
-    </div>
-    <div id="aiPreview" style="display:none;margin-top:16px;border-top:1px solid #E2E8F0;padding-top:16px;">
-      <div style="font-size:13px;font-weight:700;color:#1B3A6B;margin-bottom:8px;">AI 정리 결과 미리보기</div>
-      <div id="aiPreviewContent" style="font-size:12px;color:#374151;line-height:1.8;background:#F8FAFC;padding:12px;border-radius:6px;white-space:pre-wrap;max-height:300px;overflow-y:auto;"></div>
-      <div style="display:flex;gap:8px;margin-top:10px;">
-        <button onclick="applyAI()" style="background:#16A34A;color:#fff;border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">✅ 회의록에 적용</button>
-        <button onclick="runAI()" style="background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;border-radius:7px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:inherit;">↺ 다시 정리</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="doc">
 
-<div class="doc-title" id="docTitle" contenteditable="true">2026년 제1회 QPS위원회 회의록</div>
+<div class="doc-title" id="docTitle" contenteditable="true">2026년 제&nbsp;&nbsp;회 QPS위원회 회의록</div>
 
 <table class="main-table">
   <!-- 기본정보 -->
@@ -228,16 +268,14 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   <tr>
     <td class="sec-lbl" rowspan="2">회의내용<br>및<br>의결사항</td>
     <td colspan="3">
-      <div class="editable" id="opening" contenteditable="true" style="white-space:pre-wrap;">○ 회칙 제 8조에 의거 재적 위원    명 중    명 참석, 결석    명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함
-
-○ 전 회의록 낭독</div>
+      <div class="editable" id="opening" contenteditable="true" style="white-space:pre-wrap;">○ 회칙 제 8조에 의거 재적 위원&nbsp;&nbsp;&nbsp;명 중&nbsp;&nbsp;&nbsp;명 참석, 결석&nbsp;&nbsp;&nbsp;명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함&#10;○ 전 회의록 낭독</div>
     </td>
   </tr>
   <tr>
     <td colspan="3" style="padding:0">
       <div id="contentList"></div>
       <button class="add-btn no-print" onclick="addContent()">+ 보고사항 추가</button>
-      <button class="add-btn no-print" style="background:#EFF6FF;color:#1B3A6B;border-color:#1B3A6B;" onclick="addDiscussion()">+ 논의사항(표) 추가</button>
+      <button class="add-btn no-print add-btn-dark" onclick="addDiscussion()">+ 논의사항(표) 추가</button>
     </td>
   </tr>
 
@@ -269,7 +307,7 @@ body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;background:#E8ECF0;co
   </tr>
 </table>
 
-<div class="print-pagenum">1 / 1</div>
+<div class="print-pagenum">좋은삼선병원 QPS팀</div>
 </div>
 </div>
 
@@ -278,9 +316,6 @@ const photoData={1:null,2:null};
 let meetingType='정기';
 
 function switchType(type){
-  if(document.getElementById('agendaList').children.length>0){
-    if(!confirm('유형을 바꾸면 내용이 초기화돼요. 계속할까요?')) return;
-  }
   ['상반기','하반기','임시'].forEach(t=>{
     const btn=document.getElementById('tab-'+t);
     if(btn) btn.classList.toggle('btn-tab-active', t===type);
@@ -288,7 +323,7 @@ function switchType(type){
   setMeetingType(type==='임시'?'임시':'정기');
   loadTemplate(type);
   document.getElementById('meetingDate').innerHTML='2026년 &nbsp;&nbsp;월 &nbsp;&nbsp;일( &nbsp;) &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;';
-  document.getElementById('opening').textContent='○ 회칙 제 8조에 의거 재적 위원    명 중    명 참석, 결석    명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함\n\n○ 전 회의록 낭독';
+  document.getElementById('opening').textContent='○ 회칙 제 8조에 의거 재적 위원   명 중   명 참석, 결석   명으로 과반수가 참석하였으므로 성원이 되어 QPS실장이 개회를 선언함\n○ 전 회의록 낭독';
 }
 
 function setMeetingType(t){
@@ -333,7 +368,7 @@ function renumAg(){
   agCnt=document.querySelectorAll('#agendaList .item-row').length;
 }
 
-// 회의내용 (보고사항 등 일반)
+// 보고사항 일반
 function addContent(title='',body=''){
   const d=document.getElementById('contentList');
   const div=document.createElement('div');
@@ -344,11 +379,12 @@ function addContent(title='',body=''){
   d.appendChild(div);
 }
 
-// 논의사항 표 형식
+// 논의사항 표
 function addDiscussion(title='',status='',decision='',action='',owner='',due=''){
   const d=document.getElementById('contentList');
   const div=document.createElement('div');
   div.className='content-row';
+  div.dataset.type='disc';
   div.innerHTML=`<button class="row-del no-print" onclick="this.closest('.content-row').remove()">✕</button>
     <table class="disc-table">
       <tr><td colspan="4" class="disc-title" contenteditable="true" data-placeholder="[논의] 안건 제목">${title}</td></tr>
@@ -358,7 +394,7 @@ function addDiscussion(title='',status='',decision='',action='',owner='',due='')
       </tr>
       <tr>
         <td class="disc-lbl">의결내용</td>
-        <td colspan="3" class="disc-val" contenteditable="true" data-placeholder="의결 내용...">${decision}</td>
+        <td colspan="3" class="disc-val" contenteditable="true" data-placeholder="재적위원   명 중   명 찬성(거수로 가부 확인)하여 원안대로 승인함">${decision}</td>
       </tr>
       <tr>
         <td class="disc-lbl">이행사항</td>
@@ -381,7 +417,7 @@ function addSuggest(who='',text=''){
   div.className='suggest-row';
   div.innerHTML=`<div class="suggest-who" contenteditable="true">${who}</div>
     <div class="suggest-text" contenteditable="true" data-placeholder="발언 내용...">${text}</div>
-    <button class="row-del no-print" style="padding:8px 6px;" onclick="this.closest('.suggest-row').remove()">✕</button>`;
+    <button class="row-del no-print" style="padding:6px 6px;flex-shrink:0;" onclick="this.closest('.suggest-row').remove()">✕</button>`;
   d.appendChild(div);
 }
 
@@ -392,7 +428,7 @@ function addResolution(title='',body=''){
   div.className='content-row';
   div.innerHTML=`<button class="row-del no-print" onclick="this.closest('.content-row').remove()">✕</button>
     <div class="content-title" contenteditable="true" data-placeholder="심의의결 항목">${title}</div>
-    <div class="content-body" contenteditable="true" data-placeholder="의결 내용...">${body}</div>`;
+    <div class="content-body" contenteditable="true" data-placeholder="재적위원   명 중   명 찬성(거수로 가부 확인)하여 원안대로 승인함">${body}</div>`;
   d.appendChild(div);
 }
 
@@ -413,17 +449,17 @@ function renumAt(){
   atCnt=document.querySelectorAll('#attachList .item-row').length;
 }
 
-// 템플릿
+// ── 템플릿 ──
 const TPL={
   상반기:{
     title:'2026년 제1회 QPS위원회 회의록',
     agendas:['전년도 사업시행결과 보고','당해연도 사업계획(안) 및 예산(안) 보고','질 향상 활동 및 지표관리 선정 주제에 대한 심의 및 승인','위험도 평가-FMEA 주제 선정','환자안전 관리 활동 보고','외부 평가 관련 보고','기타'],
     contents:[
-      {title:'1. 전년도 사업시행결과 보고',body:'[붙임자료1]의 주요사업결과 요약보고를 중심으로 PPT 자료화면을 통해 보고함'},
-      {title:'2. 당해연도 사업계획(안)',body:'[붙임자료2]를 참조하여 당해연도 사업계획(안)에 대한 설명함\n   명 중    명 찬성(거수로 가부 확인)하여 사업계획(안)이 통과됨'},
-      {title:'3. 질 향상 활동 주제 심의 및 승인',body:'○    개 팀 지원 ☞ [붙임자료3] 우선순위표 참조\n○ 부서별 QI 운영: 부서 1순위 주제와 병원 전략에 부합하는 Bottom-up 주제를 수행'},
-      {title:'4. 위험도 평가-FMEA 주제 선정',body:'☞ 주제: \n[붙임자료4] 참조'},
-      {title:'5. 환자안전 관리 활동 보고',body:'PPT 및 [붙임자료5]를 참조하여 보고함'},
+      {type:'text',title:'1. 전년도 사업시행결과 보고',body:'[붙임자료1]의 주요사업결과 요약보고를 중심으로 PPT 자료화면을 통해 보고함'},
+      {type:'text',title:'2. 당해연도 사업계획(안)',body:'[붙임자료2]를 참조하여 당해연도 사업계획(안)에 대한 설명함\n   명 중    명 찬성(거수로 가부 확인)하여 사업계획(안)이 통과됨'},
+      {type:'text',title:'3. 질 향상 활동 주제 심의 및 승인',body:'○    개 팀 지원 ☞ [붙임자료3] 우선순위표 참조\n○ 부서별 QI 운영: 부서 1순위 주제와 병원 전략에 부합하는 Bottom-up 주제를 수행'},
+      {type:'text',title:'4. 위험도 평가-FMEA 주제 선정',body:'☞ 주제: \n[붙임자료4] 참조'},
+      {type:'text',title:'5. 환자안전 관리 활동 보고',body:'PPT 및 [붙임자료5]를 참조하여 보고함'},
     ],
     suggests:[{who:'병원장',text:''},{who:'QPS실장',text:''},{who:'사무국장',text:''}],
     resolutions:[
@@ -437,12 +473,12 @@ const TPL={
     title:'2026년 하반기 QPS위원회 회의록',
     agendas:['하반기 QPS실 사업 실적 보고','QPS 위원회 위원 구성 변경 건','표준진료지침(CP) 관리 모니터링 결과 보고 및 갱신(폐기) 여부 심의','환자안전 관리 활동 보고','환자안전문화 설문조사 결과 보고','QI경진대회 결과 보고','논의사항 및 기타의견'],
     contents:[
-      {title:'1. 하반기 사업 실적 보고',body:'PPT 자료화면을 통해 개요 설명\n① 지표 현황:\n② QI활동:\n③ 환자안전사고:\n④ 외부평가 현황:'},
-      {title:'2. 위원 변경 건',body:'① 위촉:\n② 해임(퇴사일, 부서발령일):\n③ 연임:   명'},
-      {title:'3. CP 관리 모니터링',body:'§ PPT 자료화면을 통해 개요 및 모니터링 결과 설명\n§ 적용률 및 완료율:\n§ 갱신(폐기) 여부:'},
-      {title:'4. 환자안전 관리 활동 보고',body:'① 환자안전주의경보:  건\n② 환자안전사고 보고:\n   - 낙상:   건 (전년 대비    건 증가/감소)\n   - 욕창:   건 (전년 대비    건 증가/감소)\n   - 투약:   건\n   - 근접오류:   건\n③ 환자안전 우수부서:'},
-      {title:'5. 환자안전문화 설문조사 결과',body:'① 응답자:   명(   %)\n② 종합 현황: 안전태도(   %) / 안전업무수행(   %)\n③ 주요 약점:\n④ 집중 관리 대상:\n⑤ 개선 과제:'},
-      {title:'6. QI경진대회 결과',body:'일시:\n발표 팀 수:   개 팀\n수상 내역:\n재단병원 우수사례 발표 여부:'},
+      {type:'text',title:'1. 하반기 사업 실적 보고',body:'PPT 자료화면을 통해 개요 설명\n① 지표 현황:\n② QI활동:\n③ 환자안전사고:\n④ 외부평가 현황:'},
+      {type:'text',title:'2. 위원 변경 건',body:'① 위촉:\n② 해임(퇴사일, 부서발령일):\n③ 연임:   명'},
+      {type:'text',title:'3. CP 관리 모니터링',body:'§ PPT 자료화면을 통해 개요 및 모니터링 결과 설명\n§ 적용률 및 완료율:\n§ 갱신(폐기) 여부:'},
+      {type:'text',title:'4. 환자안전 관리 활동 보고',body:'① 환자안전주의경보:  건\n② 환자안전사고 보고:\n   - 낙상:   건 / 욕창:   건 / 투약:   건 / 근접오류:   건\n③ 환자안전 우수부서:'},
+      {type:'text',title:'5. 환자안전문화 설문조사 결과',body:'① 응답자:   명(   %)\n② 종합: 안전태도(   %) / 안전업무수행(   %)\n③ 집중 관리 대상 / 개선 과제:'},
+      {type:'text',title:'6. QI경진대회 결과',body:'일시: / 발표 팀 수:   개 팀 / 수상 내역:'},
     ],
     suggests:[{who:'병원장',text:''},{who:'QPS실장',text:''},{who:'사무국장',text:''},{who:'간호부장',text:''}],
     resolutions:[
@@ -455,20 +491,17 @@ const TPL={
     title:'2026년 제  회 QPS위원회 회의록',
     agendas:['QI·지표·CP·환자안전·외부평가 현황 보고','논의사항','기타'],
     contents:[
-      {type:'text',title:'1. 보고사항',body:'① QI:  ② 지표(  분기):  ③ CP: 적용률   % / 완료율   %\n④ 환자안전: 낙상   건 욕창   건 투약   건 근접   건\n⑤ 외부평가:'},
-      {type:'disc',title:'[논의 1] ',status:'',decision:'',action:'',owner:'',due:''},
-      {type:'disc',title:'[논의 2] ',status:'',decision:'',action:'',owner:'',due:''},
-      {type:'disc',title:'[논의 3] ',status:'',decision:'',action:'',owner:'',due:''},
+      {type:'text',title:'1. 보고사항',body:'① QI:  ② 지표(  분기):  ③ CP: 적용률   % / 완료율   %\n④ 환자안전: 낙상   건 욕창   건 투약   건 근접   건  ⑤ 외부평가:'},
+      {type:'disc',title:'[논의 1] ',status:'',decision:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함',action:'',owner:'',due:''},
+      {type:'disc',title:'[논의 2] ',status:'',decision:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함',action:'',owner:'',due:''},
+      {type:'disc',title:'[논의 3] ',status:'',decision:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함',action:'',owner:'',due:''},
     ],
-    suggests:[
-      {who:'병원장',text:''},
-      {who:'QPS실장',text:''},
-      {who:'간호부장',text:''},
-    ],
+    suggests:[{who:'병원장',text:''},{who:'QPS실장',text:''},{who:'간호부장',text:''}],
     resolutions:[
-      {title:'보고사항 원안 동의',body:'재적위원    명 중    명 찬성하여 원안대로 승인함'},
-      {title:'[논의 1] 의결',body:'재적위원    명 중    명 찬성하여 원안대로 승인함'},
-      {title:'[논의 2] 의결',body:'재적위원    명 중    명 찬성하여 원안대로 승인함'},
+      {title:'보고사항 원안 동의',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
+      {title:'[논의 1] 의결',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
+      {title:'[논의 2] 의결',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
+      {title:'[논의 3] 의결',body:'재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함'},
     ],
     attaches:['발표자료 PPT 1부']
   }
@@ -492,6 +525,7 @@ function loadTemplate(type){
   t.attaches.forEach(a=>addAttach(a));
 }
 
+// ── 데이터 수집 ──
 function getData(){
   return{
     meetingType,
@@ -503,7 +537,7 @@ function getData(){
     opening:document.getElementById('opening').textContent,
     agendas:[...document.querySelectorAll('#agendaList .item-text')].map(el=>el.innerHTML),
     contents:[...document.querySelectorAll('#contentList .content-row')].map(el=>{
-      if(el.querySelector('.disc-table')){
+      if(el.dataset.type==='disc'){
         return{
           type:'disc',
           title:el.querySelector('.disc-title')?.innerHTML||'',
@@ -542,82 +576,103 @@ function loadJSON(e){
   r.onload=ev=>{
     try{
       const d=JSON.parse(ev.target.result);
-      setMeetingType(d.meetingType||'정기');
-      document.getElementById('docTitle').textContent=d.title||'';
-      document.getElementById('meetingDate').innerHTML=d.meetingDate||'';
-      document.getElementById('meetingPlace').textContent=d.meetingPlace||'';
-      document.getElementById('attendees').textContent=d.attendees||'';
-      document.getElementById('secretary').textContent=d.secretary||'';
-      document.getElementById('opening').textContent=d.opening||'';
-      document.getElementById('agendaList').innerHTML=''; agCnt=0;
-      (d.agendas||[]).forEach(a=>addAgenda(a));
-      document.getElementById('contentList').innerHTML='';
-      (d.contents||[]).forEach(c=>{
-        if(c.type==='disc') addDiscussion(c.title,c.status||'',c.decision||'',c.action||'',c.owner||'',c.due||'');
-        else addContent(c.title,c.body||'');
-      });
-      document.getElementById('suggestList').innerHTML='';
-      (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
-      document.getElementById('resolutionList').innerHTML='';
-      (d.resolutions||[]).forEach(r=>addResolution(r.title,r.body));
-      document.getElementById('attachList').innerHTML=''; atCnt=0;
-      (d.attaches||[]).forEach(a=>addAttach(a));
-      if(d.photo1){photoData[1]=d.photo1;const s=document.getElementById('slot1');s.innerHTML=`<img src="${d.photo1}"><button class="photo-del no-print" onclick="clearPhoto(1)">✕ 삭제</button>`;s.onclick=null;}
-      if(d.photo2){photoData[2]=d.photo2;const s=document.getElementById('slot2');s.innerHTML=`<img src="${d.photo2}"><button class="photo-del no-print" onclick="clearPhoto(2)">✕ 삭제</button>`;s.onclick=null;}
+      applyData(d);
     }catch(err){alert('파일을 읽을 수 없어요.');}
   };
   r.readAsText(file);
 }
 
+function applyData(d){
+  const type=d.meetingType==='임시'?'임시':d.title&&d.title.includes('하반기')?'하반기':'상반기';
+  ['상반기','하반기','임시'].forEach(t=>{
+    const btn=document.getElementById('tab-'+t);
+    if(btn) btn.classList.toggle('btn-tab-active', t===type);
+  });
+  setMeetingType(d.meetingType||'정기');
+  document.getElementById('docTitle').textContent=d.title||'';
+  document.getElementById('meetingDate').innerHTML=d.meetingDate||'';
+  document.getElementById('meetingPlace').textContent=d.meetingPlace||'';
+  document.getElementById('attendees').textContent=d.attendees||'';
+  document.getElementById('secretary').textContent=d.secretary||'';
+  document.getElementById('opening').textContent=d.opening||'';
+  document.getElementById('agendaList').innerHTML=''; agCnt=0;
+  (d.agendas||[]).forEach(a=>addAgenda(a));
+  document.getElementById('contentList').innerHTML='';
+  (d.contents||[]).forEach(c=>{
+    if(c.type==='disc') addDiscussion(c.title,c.status||'',c.decision||'',c.action||'',c.owner||'',c.due||'');
+    else addContent(c.title,c.body||'');
+  });
+  document.getElementById('suggestList').innerHTML='';
+  (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
+  document.getElementById('resolutionList').innerHTML='';
+  (d.resolutions||[]).forEach(r=>addResolution(r.title,r.body));
+  document.getElementById('attachList').innerHTML=''; atCnt=0;
+  (d.attaches||[]).forEach(a=>addAttach(a));
+  if(d.photo1){photoData[1]=d.photo1;const s=document.getElementById('slot1');s.innerHTML=`<img src="${d.photo1}"><button class="photo-del no-print" onclick="clearPhoto(1)">✕ 삭제</button>`;s.onclick=null;}
+  if(d.photo2){photoData[2]=d.photo2;const s=document.getElementById('slot2');s.innerHTML=`<img src="${d.photo2}"><button class="photo-del no-print" onclick="clearPhoto(2)">✕ 삭제</button>`;s.onclick=null;}
+}
+
 function resetAll(){
   if(!confirm('새 회의록을 작성할까요? 현재 내용은 사라져요.')) return;
   localStorage.removeItem('qps_minutes_auto');
-  clearPhoto(1); clearPhoto(2); setMeetingType('정기');
-  switchType('상반기');
+  clearPhoto(1); clearPhoto(2);
+  switchType('임시');
 }
 
+// ── Word 다운로드 (disc 타입 포함) ──
 function downloadWord(){
   const d=getData();
   const now=new Date();
   const ds=`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
-  const tl=d.meetingType==='임시'?'□ 정기회의  ■ 임시회의':'■ 정기회의  □ 임시회의';
-  const agRows=(d.agendas||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;font-weight:bold;background:#F8FAFC;">${i+1}.</td><td>${a}</td></tr>`).join('');
-  const ctRows=(d.contents||[]).map(c=>`<tr><td style="font-weight:bold;color:#1B3A6B;padding:5px 8px;">${c.title}</td></tr><tr><td style="white-space:pre-wrap;padding:5px 8px;line-height:1.8;">${c.body}</td></tr>`).join('');
-  const sgRows=(d.suggests||[]).map(s=>`<tr><td style="width:60pt;background:#EFF6FF;font-weight:bold;text-align:center;vertical-align:top;">[${s.who}]</td><td style="white-space:pre-wrap;line-height:1.8;">${s.text||'&nbsp;'}</td></tr>`).join('');
-  const rsRows=(d.resolutions||[]).map(r=>`<tr><td style="font-weight:bold;color:#1B3A6B;">${r.title}</td></tr><tr><td style="white-space:pre-wrap;line-height:1.8;">${r.body||'&nbsp;'}</td></tr>`).join('');
-  const atRows=(d.attaches||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;background:#F8FAFC;">${i+1}.</td><td>${a}</td></tr>`).join('');
-  const phHtml=(d.photo1||d.photo2)?`<tr><td class="lbl">회의사진</td><td colspan="3"><table><tr>${d.photo1?`<td style="text-align:center"><img src="${d.photo1}" style="max-width:190pt;max-height:130pt"></td>`:'<td></td>'}${d.photo2?`<td style="text-align:center"><img src="${d.photo2}" style="max-width:190pt;max-height:130pt"></td>`:'<td></td>'}</tr></table></td></tr>`:'';
+  const tl=d.meetingType==='임시'?'□ 정기회의&nbsp;&nbsp;■ 임시회의':'■ 정기회의&nbsp;&nbsp;□ 임시회의';
+  const agRows=(d.agendas||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;font-weight:bold;">${i+1}.</td><td>${a}</td></tr>`).join('');
+
+  const ctRows=(d.contents||[]).map(c=>{
+    if(c.type==='disc'){
+      return `<tr><td colspan="2" style="font-weight:bold;color:#1B3A6B;padding:3px 6px;">${c.title||''}</td></tr>
+<tr><td style="width:55pt;font-weight:bold;color:#1B3A6B;background:#F8FAFC;">현황</td><td style="white-space:pre-wrap;">${c.status||'&nbsp;'}</td></tr>
+<tr><td style="font-weight:bold;color:#1B3A6B;background:#F8FAFC;">의결내용</td><td style="white-space:pre-wrap;">${c.decision||'&nbsp;'}</td></tr>
+<tr><td style="font-weight:bold;color:#1B3A6B;background:#F8FAFC;">이행사항</td><td style="white-space:pre-wrap;">${c.action||'&nbsp;'} &nbsp;<b>담당:</b> ${c.owner||''} &nbsp;<b>완료예정:</b> ${c.due||''}</td></tr>`;
+    }
+    return `<tr><td colspan="2" style="font-weight:bold;color:#1B3A6B;padding:3px 6px;">${c.title||''}</td></tr>
+<tr><td colspan="2" style="white-space:pre-wrap;padding:3px 6px;line-height:1.6;">${c.body||'&nbsp;'}</td></tr>`;
+  }).join('');
+
+  const sgRows=(d.suggests||[]).map(s=>`<tr><td style="width:55pt;font-weight:bold;text-align:center;vertical-align:top;">[${s.who||''}]</td><td style="white-space:pre-wrap;line-height:1.6;">${s.text||'&nbsp;'}</td></tr>`).join('');
+  const rsRows=(d.resolutions||[]).map(r=>`<tr><td colspan="2" style="font-weight:bold;color:#1B3A6B;padding:2px 6px;">${r.title||''}</td></tr><tr><td colspan="2" style="white-space:pre-wrap;padding:2px 6px;">${r.body||'&nbsp;'}</td></tr>`).join('');
+  const atRows=(d.attaches||[]).map((a,i)=>`<tr><td style="width:22pt;text-align:center;">${i+1}.</td><td>${a}</td></tr>`).join('');
+  const phHtml=(d.photo1||d.photo2)?`<tr><td class="lbl">회의사진</td><td colspan="3"><table><tr>${d.photo1?`<td style="text-align:center"><img src="${d.photo1}" style="max-width:180pt;max-height:110pt"></td>`:''}${d.photo2?`<td style="text-align:center"><img src="${d.photo2}" style="max-width:180pt;max-height:110pt"></td>`:''}  </tr></table></td></tr>`:'';
 
   const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head><meta charset='utf-8'><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom></w:WordDocument></xml>
 <style>
-@page Section1{size:595.35pt 841.95pt;margin:45pt 45pt 55pt 45pt;}
+@page Section1{size:595pt 842pt;margin:42pt 42pt 50pt 42pt;}
 div.Section1{page:Section1;}
-body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;font-size:10pt;line-height:1.5;}
-h1{font-size:15pt;color:#1B3A6B;text-align:center;border-bottom:3px solid #1B3A6B;padding-bottom:8px;font-weight:800;}
-table{border-collapse:collapse;width:100%;font-size:9.5pt;margin-top:-1pt;}
-td{border:1px solid #64748B;padding:5px 8px;vertical-align:top;line-height:1.8;}
-.lbl{background:#fff;font-weight:bold;color:#1B3A6B;width:65pt;text-align:center;vertical-align:middle;white-space:nowrap;border-right:2pt solid #1B3A6B;}
-.sec{background:#fff;color:#1B3A6B;font-weight:bold;text-align:center;width:65pt;vertical-align:middle;white-space:nowrap;border-right:2pt solid #1B3A6B;}
-.footer{margin-top:16px;font-size:8pt;color:#888;border-top:1px solid #dde1e9;padding-top:5px;text-align:right;}
+body{font-family:'Nanum Gothic','맑은 고딕',sans-serif;font-size:9.5pt;line-height:1.4;}
+h1{font-size:14pt;color:#1B3A6B;text-align:center;border-bottom:2.5pt solid #1B3A6B;padding-bottom:7px;font-weight:800;margin-bottom:0;}
+table.main{border-collapse:collapse;width:100%;font-size:9pt;border:2pt solid #1B3A6B;}
+table.main td{border:1pt solid #94A3B8;padding:3px 6px;vertical-align:top;line-height:1.4;}
+.lbl{font-weight:bold;color:#1B3A6B;width:60pt;text-align:center;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B!important;}
+.sec{color:#1B3A6B;font-weight:bold;text-align:center;width:60pt;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B!important;}
+table.inner{border-collapse:collapse;width:100%;font-size:9pt;}
+table.inner td{border:1pt solid #94A3B8;padding:2px 5px;line-height:1.4;}
+.footer{margin-top:10px;font-size:7.5pt;color:#888;border-top:1pt solid #dde1e9;padding-top:4px;text-align:right;}
 </style></head>
 <body><div class="Section1">
 <h1>${d.title||'QPS위원회 회의록'}</h1>
-<table>
-<tr><td class="lbl">회의일시</td><td>${d.meetingDate||''}</td><td class="lbl" style="width:45pt">장소</td><td>${d.meetingPlace||''}</td></tr>
+<table class="main">
+<tr><td class="lbl">회의일시</td><td>${d.meetingDate||''}</td><td class="lbl" style="width:40pt">장소</td><td>${d.meetingPlace||''}</td></tr>
 <tr><td class="lbl">참석대상</td><td>${d.attendees||''}</td><td class="lbl">간사</td><td>${d.secretary||''}</td></tr>
 <tr><td class="lbl">회의구분</td><td colspan="3">${tl}</td></tr>
 ${phHtml}
-<tr><td class="lbl" style="vertical-align:top;padding-top:6px;">안&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;건</td><td colspan="3" style="padding:0"><table style="border:none">${agRows}</table></td></tr>
+<tr><td class="lbl" style="vertical-align:top;padding-top:5px;">안&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;건</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${agRows}</table></td></tr>
 <tr><td class="sec" rowspan="2">회의내용<br>및<br>의결사항</td><td colspan="3" style="white-space:pre-wrap;">${d.opening||''}</td></tr>
-<tr><td colspan="3" style="padding:0"><table style="border:none">${ctRows}</table></td></tr>
-<tr><td class="sec">건의사항<br>및<br>기타의견</td><td colspan="3" style="padding:0"><table style="border:none">${sgRows||'<tr><td>&nbsp;</td></tr>'}</table></td></tr>
-<tr><td class="sec">심의<br>의결<br>사항</td><td colspan="3" style="padding:0"><table style="border:none">${rsRows||'<tr><td>&nbsp;</td></tr>'}</table></td></tr>
-<tr><td class="lbl" style="vertical-align:top;padding-top:6px;">붙임자료</td><td colspan="3" style="padding:0"><table style="border:none">${atRows}</table></td></tr>
+<tr><td colspan="3" style="padding:0"><table class="inner" style="border:none">${ctRows}</table></td></tr>
+<tr><td class="sec">건의사항<br>및<br>기타의견</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${sgRows||'<tr><td>&nbsp;</td></tr>'}</table></td></tr>
+<tr><td class="sec">심의<br>의결<br>사항</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${rsRows||'<tr><td>&nbsp;</td></tr>'}</table></td></tr>
+<tr><td class="lbl" style="vertical-align:top;padding-top:5px;">붙임자료</td><td colspan="3" style="padding:0"><table class="inner" style="border:none">${atRows}</table></td></tr>
 </table>
-<div class="footer">작성일: ${ds} &nbsp;|&nbsp; 좋은삼선병원 QPS팀 &nbsp;|&nbsp;
-<!--[if supportFields]><span style='mso-element:field-begin'></span> PAGE <span style='mso-element:field-end'></span><![endif]--><span style='mso-no-proof:yes'>1</span> /
-<!--[if supportFields]><span style='mso-element:field-begin'></span> NUMPAGES <span style='mso-element:field-end'></span><![endif]--><span style='mso-no-proof:yes'>1</span> 페이지</div>
+<div class="footer">작성일: ${ds} &nbsp;|&nbsp; 좋은삼선병원 QPS팀</div>
 </div></body></html>`;
 
   const b=new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'});
@@ -625,159 +680,12 @@ ${phHtml}
   a.href=URL.createObjectURL(b); a.download=`${d.title||'회의록'}_${ds}.doc`; a.click();
 }
 
-// ── AI 회의록 정리 ──
-let aiResult = null;
-
-function showAIModal(){
-  document.getElementById('aiModal').style.display='flex';
-  document.getElementById('aiPreview').style.display='none';
-  document.getElementById('aiStatus').textContent='';
-}
-function closeAIModal(){
-  document.getElementById('aiModal').style.display='none';
-}
-
-async function runAI(){
-  const input = document.getElementById('aiInput').value.trim();
-  if(!input){ alert('PPT 내용을 먼저 붙여넣기 해주세요.'); return; }
-
-  const statusEl = document.getElementById('aiStatus');
-  statusEl.textContent = '⏳ AI가 정리 중이에요...';
-  document.getElementById('aiPreview').style.display='none';
-
-  const meetingType = document.getElementById('chk-임시').textContent==='■' ? '임시' :
-                      document.getElementById('docTitle').textContent.includes('하반기') ? '하반기' : '상반기';
-
-  const prompt = `당신은 병원 QPS위원회 회의록 작성 전문가입니다.
-아래 PPT 발표 내용을 분석하여 회의록 형식으로 정리해주세요.
-
-회의 유형: ${meetingType}회의
-병원명: 좋은삼선병원
-
-다음 JSON 형식으로만 출력하세요. 다른 설명이나 마크다운 없이 JSON만 출력:
-{
-  "opening": "개회 선언 및 전 회의록 낭독 문구",
-  "contents": [
-    {"title": "1. 보고사항 또는 안건제목", "body": "상세 내용"},
-    {"title": "[논의 1] 안건명", "body": "현황\\n\\n의결 내용\\n\\n이행 사항"}
-  ],
-  "resolutions": [
-    {"title": "의결 항목명", "body": "재적위원    명 중    명 찬성(거수로 가부 확인)하여 원안대로 승인함"}
-  ]
-}
-
-PPT 내용:
-${input}`;
-
-  try {
-    const res = await fetch('/api/claude', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        messages:[{role:'user', content: prompt}]
-      })
-    });
-
-    // 응답 텍스트 먼저 확인
-    const rawText = await res.text();
-    console.log('API 응답:', rawText.substring(0, 200));
-
-    let data;
-    try { data = JSON.parse(rawText); }
-    catch(e) { throw new Error('API 응답 오류: ' + rawText.substring(0, 100)); }
-
-    if(!res.ok) throw new Error('API 오류: ' + (data.error?.message || rawText.substring(0,100)));
-
-    const text = data.choices?.[0]?.message?.content || '';
-    if(!text) throw new Error('AI 응답이 비어있어요');
-
-    // 마크다운 제거 후 JSON 추출
-    const clean = text.replace(/```json|```/g,'').trim();
-    const jsonMatch = clean.match(/\{[\s\S]*\}/);
-    if(!jsonMatch) throw new Error('JSON 형식 오류. AI 응답: ' + text.substring(0,100));
-    aiResult = JSON.parse(jsonMatch[0]);
-
-    // 미리보기 표시
-    let preview = '';
-    if(aiResult.opening) preview += `[개회]\n${aiResult.opening}\n\n`;
-    (aiResult.contents||[]).forEach(c => {
-      preview += `[${c.title}]\n${c.body}\n\n`;
-    });
-    (aiResult.resolutions||[]).forEach(r => {
-      preview += `[심의의결] ${r.title}\n${r.body}\n\n`;
-    });
-
-    document.getElementById('aiPreviewContent').textContent = preview.trim();
-    document.getElementById('aiPreview').style.display='block';
-    statusEl.textContent = '✅ 정리 완료!';
-  } catch(e) {
-    statusEl.textContent = '❌ 오류: ' + e.message;
-  }
-}
-
-function applyAI(){
-  if(!aiResult) return;
-
-  if(aiResult.opening){
-    document.getElementById('opening').textContent = aiResult.opening;
-  }
-  if(aiResult.contents && aiResult.contents.length){
-    document.getElementById('contentList').innerHTML='';
-    aiResult.contents.forEach(c => addContent(c.title, c.body));
-  }
-  if(aiResult.resolutions && aiResult.resolutions.length){
-    document.getElementById('resolutionList').innerHTML='';
-    aiResult.resolutions.forEach(r => addResolution(r.title, r.body));
-  }
-
-  closeAIModal();
-  autoSave();
-  alert('회의록에 적용됐어요! 내용을 확인하고 수정해주세요.');
-}
-
-// ── AI 회의록 정리 ──
-// localStorage에 저장된 내용 있으면 복원
-const _saved = localStorage.getItem('qps_minutes_auto');
-if(_saved){
-  try{
-    const d=JSON.parse(_saved);
-    // 탭 활성화
-    const type=d.meetingType==='임시'?'임시':d.title&&d.title.includes('하반기')?'하반기':'상반기';
-    ['상반기','하반기','임시'].forEach(t=>{
-      const btn=document.getElementById('tab-'+t);
-      if(btn) btn.classList.toggle('btn-tab-active', t===type);
-    });
-    setMeetingType(d.meetingType||'정기');
-    document.getElementById('docTitle').textContent=d.title||'';
-    document.getElementById('meetingDate').innerHTML=d.meetingDate||'';
-    document.getElementById('meetingPlace').textContent=d.meetingPlace||'';
-    document.getElementById('attendees').textContent=d.attendees||'';
-    document.getElementById('secretary').textContent=d.secretary||'';
-    document.getElementById('opening').textContent=d.opening||'';
-    document.getElementById('agendaList').innerHTML=''; agCnt=0;
-    (d.agendas||[]).forEach(a=>addAgenda(a));
-    document.getElementById('contentList').innerHTML='';
-    (d.contents||[]).forEach(c=>addContent(c.title,c.body));
-    document.getElementById('suggestList').innerHTML='';
-    (d.suggests||[]).forEach(s=>addSuggest(s.who,s.text));
-    document.getElementById('resolutionList').innerHTML='';
-    (d.resolutions||[]).forEach(r=>addResolution(r.title,r.body));
-    document.getElementById('attachList').innerHTML=''; atCnt=0;
-    (d.attaches||[]).forEach(a=>addAttach(a));
-    if(d.photo1){photoData[1]=d.photo1;const s=document.getElementById('slot1');s.innerHTML=`<img src="${d.photo1}"><button class="photo-del no-print" onclick="clearPhoto(1)">✕ 삭제</button>`;s.onclick=null;}
-    if(d.photo2){photoData[2]=d.photo2;const s=document.getElementById('slot2');s.innerHTML=`<img src="${d.photo2}"><button class="photo-del no-print" onclick="clearPhoto(2)">✕ 삭제</button>`;s.onclick=null;}
-    showAutoSaveStatus('✅ 자동저장된 내용을 불러왔어요');
-  } catch(e){ switchType('상반기'); }
-} else {
-  switchType('상반기');
-}
-
-// 자동저장 (30초마다 + 내용 변경 시)
+// ── 자동저장 ──
 function autoSave(){
   try{
     localStorage.setItem('qps_minutes_auto', JSON.stringify(getData()));
     showAutoSaveStatus('자동저장 완료');
-  } catch(e){}
+  }catch(e){}
 }
 function showAutoSaveStatus(msg){
   let el=document.getElementById('autosave-status');
@@ -795,6 +703,17 @@ document.querySelector('.doc').addEventListener('input', ()=>{
   clearTimeout(window._autoSaveTimer);
   window._autoSaveTimer=setTimeout(autoSave, 2000);
 });
+
+// ── 초기화 ──
+const _saved=localStorage.getItem('qps_minutes_auto');
+if(_saved){
+  try{
+    applyData(JSON.parse(_saved));
+    showAutoSaveStatus('자동저장된 내용을 불러왔어요');
+  }catch(e){ switchType('임시'); }
+}else{
+  switchType('임시');
+}
 </script>
 </body>
 </html>
