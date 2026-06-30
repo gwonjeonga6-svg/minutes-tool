@@ -677,19 +677,17 @@ function downloadWord(){
     `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
   ).join('');
 
-  // 사진
-  const phRow=(d.photo1||d.photo2)?`
+  // 사진 — Word HTML 임포터에서 base64 이미지가 깨지는 문제가 있어
+  // 워드 파일에는 빈 칸만 만들고, 사용자가 워드에서 직접 사진을 삽입하도록 안내
+  const phRow=`
 <tr>
   <td class="lbl" style="vertical-align:middle;">회의사진</td>
-  <td colspan="3" style="padding:4pt;text-align:center;">
-    <table style="border:none;width:100%;border-collapse:collapse;"><tr>
-      ${d.photo1?`<td style="border:none;text-align:center;padding:2pt;"><img src="${d.photo1}" style="max-width:200pt;max-height:130pt;"></td>`:'<td style="border:none;"></td>'}
-      ${d.photo2?`<td style="border:none;text-align:center;padding:2pt;"><img src="${d.photo2}" style="max-width:200pt;max-height:130pt;"></td>`:'<td style="border:none;"></td>'}
-    </tr></table>
+  <td colspan="3" style="padding:14pt 4pt;text-align:center;color:#9199a8;font-size:9pt;">
+    (이 칸에 회의사진을 삽입하세요 — 삽입 ▸ 그림)
   </td>
-</tr>`:'' ;
+</tr>`;
 
-  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:v='urn:schemas-microsoft-com:vml' xmlns='http://www.w3.org/TR/REC-html40'>
 <head>
 <meta charset='utf-8'>
 <xml>
