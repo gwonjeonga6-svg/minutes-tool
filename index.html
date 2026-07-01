@@ -811,11 +811,17 @@ table.disc{
 
 <h1 style="font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;font-size:14pt;font-weight:bold;color:#1B3A6B;text-align:center;padding-bottom:8pt;margin-bottom:10pt;border-bottom:2pt solid #1B3A6B;">${d.title||'QPS위원회 회의록'}</h1>
 
-<table style="border-collapse:collapse;width:100%;">
+<table style="border-collapse:collapse;width:100%;table-layout:fixed;">
+  <colgroup>
+    <col style="width:52pt;">
+    <col>
+    <col style="width:52pt;">
+    <col>
+  </colgroup>
   <tr>
     <td style="${S_LBL}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
     <td style="${S_TD}border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
-    <td style="${S_LBL}width:36pt;border-top:2pt solid #1B3A6B;">장소</td>
+    <td style="${S_LBL}border-top:2pt solid #1B3A6B;">장소</td>
     <td style="${S_TD}border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">${d.meetingPlace||''}</td>
   </tr>
   <tr>
