@@ -629,15 +629,17 @@ function downloadWord(){
   const tl=d.meetingType==='임시'?'□ 정기회의　■ 임시회의':'■ 정기회의　□ 임시회의';
 
   // Word HTML 임포터는 클래스 선택자를 무시하는 경우가 있어 모든 스타일을 인라인으로 처리
-  const S_TD = 'border:1pt solid #94A3B8;padding:3pt 5pt;vertical-align:top;line-height:1.5;font-size:10pt;font-family:\'나눔고딕\',\'Nanum Gothic\',\'맑은 고딕\',sans-serif;';
-  const S_LBL = S_TD+'font-weight:bold;color:#1B3A6B;width:52pt;text-align:center;vertical-align:middle;white-space:nowrap;border-right:1.5pt solid #1B3A6B;';
-  const S_SEC = S_TD+'font-weight:bold;color:#1B3A6B;text-align:center;width:52pt;vertical-align:top;white-space:nowrap;border-right:1.5pt solid #1B3A6B;padding-top:5pt;';
-  const S_INNER_TD = 'border:1pt solid #94A3B8;padding:2pt 5pt;line-height:1.5;font-size:10pt;font-family:\'나눔고딕\',\'Nanum Gothic\',\'맑은 고딕\',sans-serif;';
+  const FONT = "font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;";
+  const S_TD = `border:1pt solid #94A3B8;padding:6px 10px;vertical-align:top;line-height:1.5;font-size:10pt;${FONT}`;
+  const S_LBL = S_TD+'font-weight:bold;color:#1B3A6B;background:#F0F4FF;width:78pt;text-align:center;vertical-align:middle;white-space:nowrap;';
+
+  // 섹션 제목 — 표 대신 밑줄 텍스트로 처리 (표와 폭/테두리 충돌 없음, RCA 보고서와 동일한 방식)
+  const sectionTitle=(label)=>`<p style="font-size:11.5pt;font-weight:bold;color:#1B3A6B;border-bottom:2pt solid #1B3A6B;padding-bottom:5pt;margin-top:16pt;margin-bottom:7pt;${FONT}">${label}</p>`;
 
   // 안건 행
   const agRows=(d.agendas||[]).map((a,i)=>
     `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
-  ).join('');
+  ).join('') || `<tr><td style="border:none;padding:6pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 회의내용 행 (보고사항 + 논의사항)
   const ctRows=(d.contents||[]).map((c,idx)=>{
@@ -645,10 +647,10 @@ function downloadWord(){
     // 블록 사이 구분 여백 (첫 항목 제외)
     const sep = idx>0 && !c.pgbreak ? `<tr><td colspan="4" style="border:none;height:6pt;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
-      return sep+brk+`<tr style="page-break-after:avoid;mso-cant-split:yes;">
+      return sep+brk+`<tr>
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${c.title||''}</td>
 </tr>
-<tr style="page-break-after:avoid;">
+<tr>
   <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.status||'　'}</td>
 </tr>
@@ -667,37 +669,33 @@ function downloadWord(){
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
 </tr>`;
     }
-    return sep+brk+`<tr style="page-break-inside:avoid;mso-cant-split:yes;">
-  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
-</tr>
-<tr style="page-break-inside:avoid;mso-cant-split:yes;">
-  <td colspan="4" style="padding:2pt 2pt 4pt 2pt;border:none;white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</td>
+    return sep+brk+`<tr>
+  <td colspan="4" style="border:none;padding:3pt 2pt 4pt 2pt;">
+    <div style="font-weight:bold;color:#1B3A6B;padding-bottom:3pt;border-bottom:1pt solid #94A3B8;margin-bottom:3pt;">${c.title||''}</div>
+    <div style="white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</div>
+  </td>
 </tr>`;
-  }).join('');
+  }).join('') || `<tr><td colspan="4" style="border:none;padding:6pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 건의사항 행
   const sgRows=(d.suggests||[]).map(s=>
-    `<tr><td style="width:52pt;font-weight:bold;text-align:center;vertical-align:top;border:1pt solid #94A3B8;padding:2pt 4pt;">${s.who||''}</td><td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${s.text||'　'}</td></tr>`
-  ).join('') || `<tr><td style="border:none;padding:14pt 4pt;">&nbsp;</td></tr>`;
+    `<tr><td style="width:70pt;font-weight:bold;text-align:center;vertical-align:top;border:1pt solid #94A3B8;padding:2pt 4pt;">${s.who||''}</td><td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${s.text||'　'}</td></tr>`
+  ).join('') || `<tr><td style="border:1pt solid #94A3B8;padding:10pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 붙임자료 행
   const atRows=(d.attaches||[]).map((a,i)=>
     `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
-  ).join('');
+  ).join('') || `<tr><td style="border:none;padding:6pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 사진 — Word HTML 임포터에서 base64 이미지가 깨지는 문제가 있어
   // 워드 파일에는 빈 칸 2개만 만들고, 사용자가 워드에서 직접 사진을 삽입하도록 안내
-  const phRow=`
-<tr>
-  <td style="${S_LBL}vertical-align:middle;">회의사진</td>
-  <td colspan="3" style="${S_TD}padding:6pt;">
-    <table style="border:none;width:100%;border-collapse:collapse;"><tr>
-      <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:4pt;width:50%;">(사진 1 삽입 — 삽입 ▸ 그림)</td>
-      <td style="border:none;width:8pt;"></td>
-      <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:4pt;width:50%;">(사진 2 삽입 — 삽입 ▸ 그림)</td>
-    </tr></table>
-  </td>
-</tr>`;
+  const phTable=`
+<table style="border-collapse:collapse;width:100%;margin-bottom:12pt;table-layout:fixed;">
+  <tr>
+    <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:4pt;width:50%;">(사진 1 삽입 — 삽입 ▸ 그림)</td>
+    <td style="border:1pt solid #CBD5E1;text-align:center;color:#9199a8;font-size:8.5pt;padding:4pt;width:50%;">(사진 2 삽입 — 삽입 ▸ 그림)</td>
+  </tr>
+</table>`;
 
   const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head>
@@ -717,85 +715,13 @@ function downloadWord(){
   mso-footer-margin:10mm;
 }
 div.Section1{page:Section1;}
-
 body{
-  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
+  ${FONT}
   font-size:10pt;
   line-height:1.5;
   color:#1E293B;
 }
-
-h1{
-  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
-  font-size:14pt;
-  font-weight:bold;
-  color:#1B3A6B;
-  text-align:center;
-  padding-bottom:6pt;
-  margin-bottom:0;
-  border-bottom:2pt solid #1B3A6B;
-}
-
-/* 메인 표 */
-table.main{
-  border-collapse:collapse;
-  width:100%;
-  font-size:10pt;
-  border:2pt solid #1B3A6B;
-  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
-}
-table.main td{
-  border:1pt solid #94A3B8;
-  padding:3pt 5pt;
-  vertical-align:top;
-  line-height:1.5;
-  font-size:10pt;
-}
-
-/* 레이블 셀 */
-.lbl{
-  font-weight:bold;
-  color:#1B3A6B;
-  width:52pt;
-  text-align:center;
-  vertical-align:middle;
-  white-space:nowrap;
-  border-right:1.5pt solid #1B3A6B;
-}
-.sec{
-  color:#1B3A6B;
-  font-weight:bold;
-  text-align:center;
-  width:52pt;
-  vertical-align:top;
-  white-space:nowrap;
-  border-right:1.5pt solid #1B3A6B;
-  padding-top:5pt;
-}
-
-/* 내부 표 (안건/붙임) */
-table.inner{
-  border-collapse:collapse;
-  width:100%;
-  font-size:10pt;
-  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
-}
-
-/* 논의사항 내부 표 */
-table.disc{
-  border-collapse:collapse;
-  width:100%;
-  font-size:10pt;
-  margin-bottom:4pt;
-  font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;
-}
-
-/* 2페이지 강제 */
-.page-break{
-  page-break-before:always;
-  mso-break-type:section-break;
-}
-
+table{ page-break-inside:avoid; }
 .footer{
   margin-top:8pt;
   font-size:8pt;
@@ -809,59 +735,50 @@ table.disc{
 <body>
 <div class="Section1">
 
-<h1 style="font-family:'나눔고딕','Nanum Gothic','맑은 고딕',sans-serif;font-size:14pt;font-weight:bold;color:#1B3A6B;text-align:center;padding-bottom:8pt;margin-bottom:10pt;border-bottom:2pt solid #1B3A6B;">${d.title||'QPS위원회 회의록'}</h1>
+<h1 style="${FONT}font-size:14pt;font-weight:bold;color:#1B3A6B;text-align:center;padding-bottom:8pt;margin-bottom:10pt;border-bottom:2pt solid #1B3A6B;">${d.title||'QPS위원회 회의록'}</h1>
 
-<table style="border-collapse:collapse;width:100%;table-layout:fixed;">
-  <colgroup>
-    <col style="width:52pt;">
-    <col>
-    <col style="width:52pt;">
-    <col>
-  </colgroup>
+<table style="border-collapse:collapse;width:100%;margin-bottom:12pt;table-layout:fixed;">
+  <colgroup><col style="width:78pt;"><col><col style="width:78pt;"><col></colgroup>
   <tr>
-    <td style="${S_LBL}border-top:2pt solid #1B3A6B;border-left:2pt solid #1B3A6B;">회의일시</td>
-    <td style="${S_TD}border-top:2pt solid #1B3A6B;">${d.meetingDate||''}</td>
-    <td style="${S_LBL}border-top:2pt solid #1B3A6B;">장소</td>
-    <td style="${S_TD}border-top:2pt solid #1B3A6B;border-right:2pt solid #1B3A6B;">${d.meetingPlace||''}</td>
+    <td style="${S_LBL}">회의일시</td>
+    <td style="${S_TD}">${d.meetingDate||''}</td>
+    <td style="${S_LBL}">장소</td>
+    <td style="${S_TD}">${d.meetingPlace||''}</td>
   </tr>
   <tr>
-    <td style="${S_LBL}border-left:2pt solid #1B3A6B;">참석대상</td>
+    <td style="${S_LBL}">참석대상</td>
     <td style="${S_TD}">${d.attendees||''}</td>
     <td style="${S_LBL}">간사</td>
-    <td style="${S_TD}border-right:2pt solid #1B3A6B;">${d.secretary||''}</td>
+    <td style="${S_TD}">${d.secretary||''}</td>
   </tr>
   <tr>
-    <td style="${S_LBL}border-left:2pt solid #1B3A6B;">회의구분</td>
-    <td colspan="3" style="${S_TD}border-right:2pt solid #1B3A6B;">${tl}</td>
+    <td style="${S_LBL}">회의구분</td>
+    <td colspan="3" style="${S_TD}">${tl}</td>
   </tr>
-  ${phRow}
-  <tr>
-    <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;">안&nbsp;&nbsp;&nbsp;&nbsp;건</td>
-    <td colspan="3" style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;"><tbody>${agRows}</tbody></table>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan="2" style="${S_SEC}border-left:2pt solid #1B3A6B;">회의내용<br>및<br>의결사항</td>
-    <td colspan="3" style="${S_TD}white-space:pre-wrap;padding:4pt 6pt;border-right:2pt solid #1B3A6B;">${d.opening||''}</td>
-  </tr>
-  <tr>
-    <td colspan="3" style="${S_TD}padding:4pt 6pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;margin-bottom:4pt;"><tbody>${ctRows}</tbody></table>
-    </td>
-  </tr>
-  <tr>
-    <td style="${S_SEC}border-left:2pt solid #1B3A6B;">건의사항<br>및<br>기타의견</td>
-    <td colspan="3" style="${S_TD}padding:0pt;border-right:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;"><tbody>${sgRows}</tbody></table>
-    </td>
-  </tr>
-  <tr>
-    <td style="${S_LBL}vertical-align:top;padding-top:4pt;border-left:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">붙임자료</td>
-    <td colspan="3" style="${S_TD}padding:2pt 4pt;border-right:2pt solid #1B3A6B;border-bottom:2pt solid #1B3A6B;">
-      <table style="border-collapse:collapse;width:100%;"><tbody>${atRows}</tbody></table>
-    </td>
-  </tr>
+</table>
+
+${sectionTitle('회의사진')}
+${phTable}
+
+${sectionTitle('안&nbsp;&nbsp;&nbsp;&nbsp;건')}
+<table style="border-collapse:collapse;width:100%;margin-bottom:12pt;">
+  <tbody>${agRows}</tbody>
+</table>
+
+${sectionTitle('회의내용 및 의결사항')}
+${d.opening ? `<table style="border-collapse:collapse;width:100%;margin-bottom:8pt;"><tr><td style="${S_TD}white-space:pre-wrap;">${d.opening}</td></tr></table>` : ''}
+<table style="border-collapse:collapse;width:100%;margin-bottom:12pt;">
+  <tbody>${ctRows}</tbody>
+</table>
+
+${sectionTitle('건의사항 및 기타의견')}
+<table style="border-collapse:collapse;width:100%;margin-bottom:12pt;">
+  <tbody>${sgRows}</tbody>
+</table>
+
+${sectionTitle('붙임자료')}
+<table style="border-collapse:collapse;width:100%;margin-bottom:4pt;">
+  <tbody>${atRows}</tbody>
 </table>
 
 <div class="footer">작성일: ${ds}&nbsp;&nbsp;|&nbsp;&nbsp;좋은삼선병원 QPS팀</div>
