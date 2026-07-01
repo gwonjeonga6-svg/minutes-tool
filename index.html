@@ -812,6 +812,24 @@ document.querySelector('.doc').addEventListener('input',()=>{
   clearTimeout(window._ast); window._ast=setTimeout(autoSave,2000);
 });
 
+// ── 붙여넣기 시 서식 자동 제거 (다른 곳에서 복사한 글자/줄간격 등 서식이 안 딸려오게) ──
+document.querySelector('.doc').addEventListener('paste', function(e){
+  const target = e.target.closest('[contenteditable="true"]');
+  if(!target) return;
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+  const sel = window.getSelection();
+  if(!sel.rangeCount) return;
+  sel.deleteFromDocument();
+  const range = sel.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(document.createTextNode(text));
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  target.dispatchEvent(new Event('input', {bubbles:true}));
+});
+
 // ── 초기화 ──
 const _saved=localStorage.getItem('qps_minutes_auto');
 if(_saved){
