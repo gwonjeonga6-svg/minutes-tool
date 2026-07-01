@@ -645,10 +645,10 @@ function downloadWord(){
     // 블록 사이 구분 여백 (첫 항목 제외)
     const sep = idx>0 && !c.pgbreak ? `<tr><td colspan="4" style="border:none;height:6pt;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
-      return sep+brk+`<tr>
+      return sep+brk+`<tr style="page-break-after:avoid;mso-cant-split:yes;">
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${c.title||''}</td>
 </tr>
-<tr>
+<tr style="page-break-after:avoid;">
   <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.status||'　'}</td>
 </tr>
@@ -667,10 +667,10 @@ function downloadWord(){
   <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;">${c.due||'　'}</td>
 </tr>`;
     }
-    return sep+brk+`<tr>
+    return sep+brk+`<tr style="page-break-inside:avoid;mso-cant-split:yes;">
   <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:3pt 2pt;border:none;border-bottom:1pt solid #94A3B8;">${c.title||''}</td>
 </tr>
-<tr>
+<tr style="page-break-inside:avoid;mso-cant-split:yes;">
   <td colspan="4" style="padding:2pt 2pt 4pt 2pt;border:none;white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</td>
 </tr>`;
   }).join('');
