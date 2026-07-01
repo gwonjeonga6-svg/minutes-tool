@@ -636,6 +636,9 @@ function downloadWord(){
   // 섹션 제목 — 표 대신 밑줄 텍스트로 처리 (표와 폭/테두리 충돌 없음, RCA 보고서와 동일한 방식)
   const sectionTitle=(label)=>`<p style="font-size:11.5pt;font-weight:bold;color:#1B3A6B;border-bottom:2pt solid #1B3A6B;padding-bottom:5pt;margin-top:16pt;margin-bottom:7pt;${FONT}">${label}</p>`;
 
+  // 줄바꿈을 <br>로 명시 변환 — Word가 \n을 별도 문단으로 인식해 문단간격을 붙이는 문제 방지
+  const nl2br = (t) => (t||'').replace(/\n/g, '<br>');
+
   // 안건 행
   const agRows=(d.agendas||[]).map((a,i)=>
     `<tr><td style="width:16pt;text-align:left;border:none;padding:1pt 2pt;font-weight:bold;">${i+1}.</td><td style="border:none;padding:1pt 3pt;">${a}</td></tr>`
@@ -652,15 +655,15 @@ function downloadWord(){
 </tr>
 <tr>
   <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
-  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.status||'　'}</td>
+  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${nl2br(c.status)||'　'}</td>
 </tr>
 <tr>
   <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">의결내용</td>
-  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.decision||'　'}</td>
+  <td colspan="3" style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${nl2br(c.decision)||'　'}</td>
 </tr>
 <tr>
   <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">이행사항</td>
-  <td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${c.action||'　'}</td>
+  <td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${nl2br(c.action)||'　'}</td>
   <td style="width:28pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">담당</td>
   <td style="width:52pt;border:1pt solid #94A3B8;padding:2pt 4pt;">${c.owner||'　'}</td>
 </tr>
@@ -672,14 +675,14 @@ function downloadWord(){
     return sep+brk+`<tr>
   <td colspan="4" style="border:none;padding:3pt 2pt 4pt 2pt;">
     <div style="font-weight:bold;color:#1B3A6B;padding-bottom:3pt;border-bottom:1pt solid #94A3B8;margin-bottom:3pt;">${c.title||''}</div>
-    <div style="white-space:pre-wrap;line-height:1.5;">${c.body||'　'}</div>
+    <div style="white-space:pre-wrap;line-height:1.5;">${nl2br(c.body)||'　'}</div>
   </td>
 </tr>`;
   }).join('') || `<tr><td colspan="4" style="border:none;padding:6pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 건의사항 행
   const sgRows=(d.suggests||[]).map(s=>
-    `<tr><td style="width:70pt;font-weight:bold;text-align:center;vertical-align:top;border:1pt solid #94A3B8;padding:2pt 4pt;">${s.who||''}</td><td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${s.text||'　'}</td></tr>`
+    `<tr><td style="width:70pt;font-weight:bold;text-align:center;vertical-align:top;border:1pt solid #94A3B8;padding:2pt 4pt;">${s.who||''}</td><td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${nl2br(s.text)||'　'}</td></tr>`
   ).join('') || `<tr><td style="border:1pt solid #94A3B8;padding:10pt 4pt;color:#9199a8;">-</td></tr>`;
 
   // 붙임자료 행
@@ -766,7 +769,7 @@ ${sectionTitle('안&nbsp;&nbsp;&nbsp;&nbsp;건')}
 </table>
 
 ${sectionTitle('회의내용 및 의결사항')}
-${d.opening ? `<table style="border-collapse:collapse;width:100%;margin-bottom:8pt;"><tr><td style="${S_TD}white-space:pre-wrap;">${d.opening}</td></tr></table>` : ''}
+${d.opening ? `<table style="border-collapse:collapse;width:100%;margin-bottom:8pt;"><tr><td style="${S_TD}white-space:pre-wrap;">${nl2br(d.opening)}</td></tr></table>` : ''}
 <table style="border-collapse:collapse;width:100%;margin-bottom:12pt;">
   <tbody>${ctRows}</tbody>
 </table>
