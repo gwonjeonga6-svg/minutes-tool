@@ -636,8 +636,25 @@ function downloadWord(){
   // 섹션 제목 — 표 대신 밑줄 텍스트로 처리 (표와 폭/테두리 충돌 없음, RCA 보고서와 동일한 방식)
   const sectionTitle=(label)=>`<p style="font-size:11.5pt;font-weight:bold;color:#1B3A6B;border-bottom:2pt solid #1B3A6B;padding-bottom:5pt;margin-top:16pt;margin-bottom:7pt;${FONT}">${label}</p>`;
 
+  // 입력창(contenteditable)은 Enter를 치면 \n이 아니라 <div>/<br> 태그로 줄이 나뉘는 구조라
+  // innerHTML을 그대로 쓰면 빈 줄(연속 Enter)이 <div><br></div>로 남아 문단 간격이 벌어짐.
+  // 이를 순수 줄바꿈(\n)으로 정규화한 뒤 연속된 빈 줄을 하나로 축소한다.
+  const htmlToText = (html) => {
+    if(!html) return '';
+    let s = html;
+    s = s.replace(/<div><br\s*\/?><\/div>/gi, '\n');
+    s = s.replace(/<div[^>]*>/gi, '\n').replace(/<\/div>/gi, '');
+    s = s.replace(/<br\s*\/?>/gi, '\n');
+    s = s.replace(/<[^>]+>/g, '');
+    s = s.replace(/&nbsp;/gi, ' ');
+    s = s.replace(/^\n+/, '');
+    s = s.replace(/\n{2,}/g, '\n');
+    return s;
+  };
+
   // 줄바꿈을 <br>로 명시 변환 — Word가 \n을 별도 문단으로 인식해 문단간격을 붙이는 문제 방지
-  const nl2br = (t) => (t||'').replace(/\n/g, '<br>');
+  // 연속된 빈 줄(Enter 2번 이상)은 자동으로 1줄로 축소
+  const nl2br = (t) => htmlToText(t).replace(/\n/g, '<br>');
 
   // 안건 행
   const agRows=(d.agendas||[]).map((a,i)=>
@@ -651,7 +668,7 @@ function downloadWord(){
     const sep = idx>0 && !c.pgbreak ? `<tr><td colspan="4" style="border:none;height:6pt;padding:0;line-height:0;">&nbsp;</td></tr>` : '';
     if(c.type==='disc'){
       return sep+brk+`<tr>
-  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${c.title||''}</td>
+  <td colspan="4" style="font-weight:bold;color:#1B3A6B;padding:4pt 6pt;border:1pt solid #94A3B8;border-bottom:none;background:#F0F4FF;">${htmlToText(c.title)||''}</td>
 </tr>
 <tr>
   <td style="width:52pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">현황</td>
@@ -665,7 +682,7 @@ function downloadWord(){
   <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">이행사항</td>
   <td style="border:1pt solid #94A3B8;padding:2pt 4pt;white-space:pre-wrap;">${nl2br(c.action)||'　'}</td>
   <td style="width:28pt;font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">담당</td>
-  <td style="width:52pt;border:1pt solid #94A3B8;padding:2pt 4pt;">${c.owner||'　'}</td>
+  <td style="width:52pt;border:1pt solid #94A3B8;padding:2pt 4pt;">${htmlToText(c.owner)||'　'}</td>
 </tr>
 <tr>
   <td style="font-weight:bold;color:#1B3A6B;text-align:center;border:1pt solid #94A3B8;padding:2pt 4pt;">완료예정</td>
@@ -674,7 +691,7 @@ function downloadWord(){
     }
     return sep+brk+`<tr>
   <td colspan="4" style="border:none;padding:3pt 2pt 4pt 2pt;">
-    <div style="font-weight:bold;color:#1B3A6B;padding-bottom:3pt;border-bottom:1pt solid #94A3B8;margin-bottom:3pt;">${c.title||''}</div>
+    <div style="font-weight:bold;color:#1B3A6B;padding-bottom:3pt;border-bottom:1pt solid #94A3B8;margin-bottom:3pt;">${htmlToText(c.title)||''}</div>
     <div style="white-space:pre-wrap;line-height:1.5;">${nl2br(c.body)||'　'}</div>
   </td>
 </tr>`;
@@ -817,7 +834,8 @@ document.querySelector('.doc').addEventListener('input',()=>{
 
 // ── 붙여넣기 시 서식 자동 제거 (다른 곳에서 복사한 글자/줄간격 등 서식이 안 딸려오게) ──
 document.querySelector('.doc').addEventListener('paste', function(e){
-  const target = e.target.closest('[contenteditable="true"]');
+  const node = e.target.nodeType===3 ? e.target.parentElement : e.target;
+  const target = node ? node.closest('[contenteditable="true"]') : null;
   if(!target) return;
   e.preventDefault();
   const text = (e.clipboardData || window.clipboardData).getData('text/plain');
